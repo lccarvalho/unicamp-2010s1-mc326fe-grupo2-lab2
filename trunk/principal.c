@@ -20,11 +20,12 @@
 #include <stdlib.h>
 #include "database.h"
 #include "languages.h"
+#include "envelope.h"
 
 /* o programa recebe apenas a parte fixa do nome do banco, atribuindo as 
    extensões (.fix, .cfg, .dlm) para os dados em formato de campo fixo,
    delimitado e o arquivo de definição dos campos */
-#define QTE_ARGUMENTOS 1
+#define QTE_ARGUMENTOS 3
 
 
 void Erro(char * msgErro) {
