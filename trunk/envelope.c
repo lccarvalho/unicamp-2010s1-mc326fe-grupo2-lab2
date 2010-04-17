@@ -15,7 +15,7 @@ FILE * Fopen(char *arg1, char *arg2){
      if(f == NULL) {
           fprintf(stderr, MSG_ERRO_ABERTURA_ARQUIVO);
           system("pause");
-          exit;
+          exit (0);
      }
      
      return f;
@@ -32,9 +32,9 @@ void * Malloc(int tamanho){
      ptr = malloc(tamanho);
      
      if(ptr == NULL) {
-            fprintf(stderr, MSG_ERRO_MEMORIA);
+            fprintf(stderr, "Erro memória\n"); ///////MODIFICAR//////////////////////////////////////////////////////
             system("pause");
-            exit;
+            exit (0);
      }
      
      return ptr;

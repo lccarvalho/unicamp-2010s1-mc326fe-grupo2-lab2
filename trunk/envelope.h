@@ -5,9 +5,6 @@
 
 
 
-typedef enum {false, true} Boolean;
-
-
 FILE * Fopen(char *arg1, char *arg2);
 /* Abre um arquivo. Em caso de erro, imprime mensagem de erro e finaliza
    a execução do programa */

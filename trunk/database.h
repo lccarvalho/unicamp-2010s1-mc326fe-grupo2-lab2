@@ -35,7 +35,7 @@ typedef char** Record;
 
 
 /* Definição de estrutura que armazena as características de um campo de um
-   arquvo de dados. Estas características devem ser extraídas de um arquivo de
+   arquivo de dados. Estas características devem ser extraídas de um arquivo de
    configuração ou de uma seção específica do arquivo de dados */
 typedef struct {
         char nome[tamPrimCampoHd+1];
@@ -54,13 +54,6 @@ Boolean LeConfig(char* sep, char* lingua);
    os dados no arquivo de entrada e em lingua o identificador da linua de 
    interface. Retorna erro se não encontrar o arquivo ou se o conteúdo 
    for inválido */
-
-
-Boolean AbreArquivoFixo(char* nomeArq, FILE* arqFix, FILE* arqCfg);
-/* Abre para leitura os arquivos a serem apontados por arqFix e arqCfg, 
-   representados por nomeArq, respectivamente acrescidos das extensões 
-   ".fix" e ".cfg". Retorna false no insucesso da abertura de qualquer
-   dos 2 arquivos */
    
 void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg);
 /* Carrega o vetor head com os campos do banco de dados definido por arqCfg */

@@ -22,9 +22,7 @@
 #include "languages.h"
 #include "envelope.h"
 
-/* o programa recebe apenas a parte fixa do nome do banco, atribuindo as 
-   extensões (.fix, .cfg, .dlm) para os dados em formato de campo fixo,
-   delimitado e o arquivo de definição dos campos */
+/* o programa recebe os nomes dos arquivos de entrada e saída */
 #define QTE_ARGUMENTOS 3
 
 
@@ -32,11 +30,11 @@ void Erro(char * msgErro) {
      printf("%s\n",msgErro); 
      system("pause");
      exit(0);
-     }
+}
 
 
 int main(int argc, char *argv[]) {
-    //variáveis
+    /* variáveis */
     char lingua[5];
     char separador;
     char fimRegistro;
@@ -46,24 +44,25 @@ int main(int argc, char *argv[]) {
     int i, numcampos;
     Record registro;
     
-    //checa linha de comando
+    /* checa linha de comando */
     if(argc != QTE_ARGUMENTOS)
        Erro(MSG_ERRO_NUM_ARGUMENTOS);
 
-    //arquivo de configuração
+    /* arquivo de configuração */
     if(!LeConfig(&separador, lingua))
        Erro(MSG_ERRO_CONFIG); 
 
-    //definição da lingua de interface
+    /* definição da lingua de interface */
     Linguagem(lingua);
 
-    //abertura dos arquivos do banco de dados
-    if(!AbreArquivoFixo(argv[1], arqFix, arqCfg))
-       Erro(MSG_ERRO_ABERTURA_ARQUIVO); 
-
-    //leitura dos campos                               
+    /* abertura dos arquivos */
+    arqFix = Fopen(argv[1], "r");
+    arqCfg = Fopen("header.cfg", "r");
+    
+    /* leitura dos campos */                        
     CarregaHeader(&head, &numcampos, arqCfg);
     
+
     //impressão dos campos do arquivo de tamanho fixo
     while(!feof(arqFix)) {
           registro = LeRegistroFixo(arqFix, numcampos, head);
@@ -74,7 +73,7 @@ int main(int argc, char *argv[]) {
           }
 
     //criação do arquivo delimitado
-    arqDlm = ConverteFixoDelim(argv[1], arqFix, separador);
+    arqDlm = ConverteFixoDelim(argv[2], arqFix, separador);
     
     //impressão dos campos do arquivo delimitados
     while(!feof(arqDlm)) {
@@ -84,6 +83,7 @@ int main(int argc, char *argv[]) {
           printf("\n");
           //LiberaRegistro(registro); ??
           }
+    
     
     fclose(arqFix);
     fclose(arqDlm);

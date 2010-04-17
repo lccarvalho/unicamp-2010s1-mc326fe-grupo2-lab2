@@ -26,16 +26,6 @@ Boolean LeConfig(char * sep, char * lingua){
    return true;
 }
 
-       
-Boolean AbreArquivoFixo(char * nomeArq, FILE * arqFix, FILE * arqCfg) {
-/* Abre para leitura os arquivos a serem apontados por arqFix e arqCfg, 
-   representados por nomeArq, respectivamente acrescidos das extensões 
-   ".fix" e ".cfg". Retorna false no insucesso da abertura de qualquer
-   dos 2 arquivos */
-   
-   return true;
-}
-
    
 void TiraBrancosDoFinal(char* s){
 /* Elimina todos os brancos em excesso no final de uma string. */
