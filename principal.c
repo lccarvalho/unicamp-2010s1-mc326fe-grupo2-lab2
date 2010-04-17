@@ -47,21 +47,22 @@ int main(int argc, char *argv[]) {
     Record registro;
     
     //checa linha de comando
-    if(argc != QTE_ARGUMENTOS) Erro(MSG_ERRO_NUM_ARGUMENTOS);
+    if(argc != QTE_ARGUMENTOS)
+       Erro(MSG_ERRO_NUM_ARGUMENTOS);
 
     //arquivo de configuração
-    if(!LeConfig(&separador, lingua))  Erro(MSG_ERRO_CONFIG); 
+    if(!LeConfig(&separador, lingua))
+       Erro(MSG_ERRO_CONFIG); 
 
     //definição da lingua de interface
     Linguagem(lingua);
 
     //abertura dos arquivos do banco de dados
     if(!AbreArquivoFixo(argv[1], arqFix, arqCfg))
-                               Erro(MSG_ERRO_ABERTURA_ARQUIVO); 
+       Erro(MSG_ERRO_ABERTURA_ARQUIVO); 
 
     //leitura dos campos                               
-    if(!(numcampos = CarregaHeader(head, arqCfg)))
-                                   Erro(MSG_ERRO_ARQ_CFG_BDADOS);      
+    CarregaHeader(&head, &numcampos, arqCfg);
     
     //impressão dos campos do arquivo de tamanho fixo
     while(!feof(arqFix)) {
@@ -87,7 +88,8 @@ int main(int argc, char *argv[]) {
     fclose(arqFix);
     fclose(arqDlm);
     fclose(arqCfg);
-//    free(???); LiberaRegistro(????); LiberaHeader(????);
+    free(head);
+//    free(???); LiberaRegistro(????);
     
     system("pause");
     return 0;

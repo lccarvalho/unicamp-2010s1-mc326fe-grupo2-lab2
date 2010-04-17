@@ -14,7 +14,11 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#define branco ' '
+#define tamPrimCampoHd 20
+#define tamUltCampoHd 40
 
 /*** Estruturas de dados ******************************************************/
 
@@ -34,12 +38,12 @@ typedef char** Record;
    arquvo de dados. Estas características devem ser extraídas de um arquivo de
    configuração ou de uma seção específica do arquivo de dados */
 typedef struct {
-        char nome[20];
+        char nome[tamPrimCampoHd+1];
         char tipo;
         int inicio;
         int tamanho;
         Boolean obrig;
-        char msg[30];
+        char msg[tamUltCampoHd+1];
         } Header;
 
 
@@ -50,11 +54,7 @@ Boolean LeConfig(char* sep, char* lingua);
    os dados no arquivo de entrada e em lingua o identificador da linua de 
    interface. Retorna erro se não encontrar o arquivo ou se o conteúdo 
    for inválido */
-   
-void Linguagem(char* lingua);
-/* Configura as mensagens de tela do programa conforme a lingua em uso, 
-   identificada por lingua
-*/ 
+
 
 Boolean AbreArquivoFixo(char* nomeArq, FILE* arqFix, FILE* arqCfg);
 /* Abre para leitura os arquivos a serem apontados por arqFix e arqCfg, 
@@ -62,9 +62,8 @@ Boolean AbreArquivoFixo(char* nomeArq, FILE* arqFix, FILE* arqCfg);
    ".fix" e ".cfg". Retorna false no insucesso da abertura de qualquer
    dos 2 arquivos */
    
-int CarregaHeader(Header* h, FILE* arqCfg);
-/* Carrega o vetor head com os campos do banco de dados definido por arqCfg
-   retorna a quantidade de campos */
+void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg);
+/* Carrega o vetor head com os campos do banco de dados definido por arqCfg */
 
 Record LeRegistroFixo(FILE* arq, int n, Header* h);
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 

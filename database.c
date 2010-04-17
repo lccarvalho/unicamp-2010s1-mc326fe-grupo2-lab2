@@ -25,14 +25,6 @@ Boolean LeConfig(char * sep, char * lingua){
    
    return true;
 }
-   
-   
-void Linguagem(char *lingua){
-/* Configura as mensagens de tela do programa conforme a lingua em uso, 
-   identificada por lingua
-*/ 
-   return;
-}
 
        
 Boolean AbreArquivoFixo(char * nomeArq, FILE * arqFix, FILE * arqCfg) {
@@ -45,13 +37,59 @@ Boolean AbreArquivoFixo(char * nomeArq, FILE * arqFix, FILE * arqCfg) {
 }
 
    
-int CarregaHeader(Header* head, FILE* arqCfg){
-/* Carrega o vetor head com os campos do banco de dados definido por arqCfg
-   retorna a quantidade de campos */
+void TiraBrancosDoFinal(char* s){
+/* Elimina todos os brancos em excesso no final de uma string. */
+    
+    int i = strlen(s) - 1;     //Último elemento da string
+    while(i >= 0 && s[i] == branco)
+       i--;
+    s[i+1] = '\0';
+    
+} /* TiraBrancosDoFinal */
 
-   return 0;
-}
-   
+
+void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg){
+/* Carrega o vetor head com os campos do banco de dados definido por arqCfg */
+
+    int i, final;
+    char c;
+    
+    fscanf(arqCfg, "%d", numcampos);     /* Le número de campos */
+    fseek(arqCfg, 2, SEEK_CUR);
+    *h = malloc(sizeof(Header)*(*numcampos));     /* Aloca o vetor head */
+    
+    for(i = 0; i < *numcampos; i++) {
+        
+        /* Le nome */
+        fread((*h+i)->nome, tamPrimCampoHd, 1, arqCfg);
+        (*h+i)->nome[tamPrimCampoHd] = '\0';
+        TiraBrancosDoFinal((*h+i)->nome);
+    
+        /* Le tipo */
+        (*h+i)->tipo = fgetc(arqCfg);
+        
+        /* Le endereço de inicio e final de um campo e calcula seu tamanho */
+        fscanf(arqCfg, "%d %d", &((*h+i)->inicio), &final);
+        (*h+i)->tamanho = final - (*h+i)->inicio + 1;
+        
+        /* Le caractere de obrigatoriedade do campo */
+        fseek(arqCfg, 1, SEEK_CUR);
+        c = fgetc(arqCfg);
+        if(c == 'S')
+            (*h+i)->obrig = true;
+        else
+            (*h+i)->obrig = false;
+            
+        /* Le mensagem */    
+        fseek(arqCfg, 1, SEEK_CUR);
+        fread((*h+i)->msg, tamUltCampoHd, 1, arqCfg);
+        (*h+i)->msg[tamUltCampoHd] = '\0';
+        TiraBrancosDoFinal((*h+i)->msg);
+    
+        fseek(arqCfg, 2, SEEK_CUR);
+    }
+    
+} /* CarregaHeader */
 
 Record LeRegistroFixo(FILE* arqFix, int n, Header* h) {
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
