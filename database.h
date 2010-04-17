@@ -49,6 +49,10 @@ typedef struct {
 
 /*** Funções ******************************************************************/
 
+Boolean VerificaDigitos(char *string);
+/* Retorna "true" se a string só contém digitos de 0-9
+   ou retorna "false" caso contrário */
+
 Boolean LeConfig(char* sep, char* lingua);
 /* Procura o arquivo Config.l1b e carrega em sep o caractere que deve separar 
    os dados no arquivo de entrada e em lingua o identificador da linua de 
