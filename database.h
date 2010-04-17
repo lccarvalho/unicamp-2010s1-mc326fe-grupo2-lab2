@@ -66,7 +66,7 @@ int CarregaHeader(Header* h, FILE* arqCfg);
 /* Carrega o vetor head com os campos do banco de dados definido por arqCfg
    retorna a quantidade de campos */
 
-Record LeRegistroFixo(FILE* arq, int n);
+Record LeRegistroFixo(FILE* arq, int n, Header* h);
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de um arquivo de dados em formato de campo fixo
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 

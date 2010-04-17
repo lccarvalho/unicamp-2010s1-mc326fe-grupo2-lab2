@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     
     //impressão dos campos do arquivo de tamanho fixo
     while(!feof(arqFix)) {
-          registro = LeRegistroFixo(arqFix, numcampos);
+          registro = LeRegistroFixo(arqFix, numcampos, head);
           for(i=0; i<numcampos; i++)
                    fprintf(stdout, "%s ", registro[i]);
           printf("\n");
