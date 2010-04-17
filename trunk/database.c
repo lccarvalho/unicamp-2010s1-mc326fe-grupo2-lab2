@@ -53,13 +53,21 @@ int CarregaHeader(Header* head, FILE* arqCfg){
 }
    
 
-Record LeRegistroFixo(FILE* arqFix, int n) {
+Record LeRegistroFixo(FILE* arqFix, int n, Header* h) {
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de arqFix. Carrega Record com os endereços do 
    conteúdo de cada campo. Deixa o ponteiro de arqFix na posição apropriada
    para a próxima leitura */
    
+   int i;
    Record registro;
+   
+   for(i=0;i<n;i++){
+   registro[i] = malloc(sizeof(char*)*h[i].tamanho);
+   registro[i] = "valor";              
+                    
+   }
+   
    return registro;
 }
    
