@@ -17,6 +17,21 @@
 
 
 
+Boolean VerificaDigitos(char *string) {
+/* Retorna "true" se a string só contém digitos de 0-9
+   ou retorna "false" caso contrário */
+
+    int i, tam = strlen(string);
+    
+    for(i = 0; i < tam; i++)
+       if(!isdigit(string[i]))
+          return false;
+    
+    return true;
+
+} /* VerificaDigitos */
+
+
 Boolean LeConfig(char * sep, char * lingua){
 /* Procura o arquivo Config.l1b e carrega em sep o caractere que deve separar 
    os dados no arquivo de entrada e em lingua o identificador da linua de 

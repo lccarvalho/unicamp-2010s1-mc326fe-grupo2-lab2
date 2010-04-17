@@ -33,6 +33,65 @@ void Erro(char * msgErro) {
 }
 
 
+int LeOpcao(){
+/* Le a opcao digitada e a retorna como um 'int' */
+
+    char opcao[5];
+    scanf("%s", opcao);
+    
+    while(!VerificaDigitos(opcao)) {
+       printf("%s", OPCAO_INVALIDA); //OPCAO INVALIDA = "\nSua opcao deve conter somente numeros\nTente novamente:\n\n" ****************************************************************
+       scanf("%s", opcao);
+    }
+    
+    return atoi(opcao);
+
+} /* LeOpcao */
+
+
+void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador){
+/* Menu do programa */
+     
+     int opcao;
+     Boolean fim = false;
+     
+     do {
+         system("cls");
+         printf("%s", TELA_PRINCIPAL);
+         printf("%s", OPCAO_1);
+         printf("%s", OPCAO_2);
+         printf("%s", OPCAO_3);
+         printf("%s", OPCAO_4);  //OPCAO_4 neste caso é "Encerrar" ****************************************************************
+         
+         opcao = LeOpcao();
+         while(opcao <= 0 || opcao > 4){   /* Verifica se é uma opção válida */
+             printf("%s", TXT_OUTPUT_INV);  //Alterar a mensagem ****************************************************************
+             opcao = LeOpcao();
+         }
+         
+         switch(opcao){
+             case 1:
+                  arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador);
+                  printf("%s", ARQ_CONVERTIDO); //ARQ_CONVERTIDO = "Arquivo convertido\n" ****************************************************************
+                  system("pause");
+             break;
+             case 2:
+                  //Listar arquivos de dados no formato fixo ****************************************************************
+                  system("pause");
+             break;
+             case 3:
+                  //Listar arquivos de dados no formato variavel ****************************************************************
+                  system("pause");
+             break;
+             case 4:
+                  fim = true;
+             break;
+         }
+     } while (!fim);
+     
+} /* Menu */
+
+
 int main(int argc, char *argv[]) {
     /* variáveis */
     char lingua[5];
@@ -62,7 +121,9 @@ int main(int argc, char *argv[]) {
     /* leitura dos campos */                        
     CarregaHeader(&head, &numcampos, arqCfg);
     
-
+    Menu(head, arqFix, arqDlm, argv[2], separador);
+    
+/*
     //impressão dos campos do arquivo de tamanho fixo
     while(!feof(arqFix)) {
           registro = LeRegistroFixo(arqFix, numcampos, head);
@@ -71,9 +132,6 @@ int main(int argc, char *argv[]) {
           printf("\n");
           //LiberaRegistro(registro); ??
           }
-
-    //criação do arquivo delimitado
-    arqDlm = ConverteFixoDelim(argv[2], arqFix, separador);
     
     //impressão dos campos do arquivo delimitados
     while(!feof(arqDlm)) {
@@ -83,13 +141,13 @@ int main(int argc, char *argv[]) {
           printf("\n");
           //LiberaRegistro(registro); ??
           }
-    
+*/    
     
     fclose(arqFix);
     fclose(arqDlm);
     fclose(arqCfg);
     free(head);
-//    free(???); LiberaRegistro(????);
+//    free(???); LiberaRegistro(????); ***********************************************************************************
     
     system("pause");
     return 0;
