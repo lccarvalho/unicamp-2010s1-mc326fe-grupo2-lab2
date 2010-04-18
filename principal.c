@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
           fread(linha, tamanhofix, 1, arqFix); 
           registro = LeRegistroFixo(linha, numcampos, head);
           for(i=0; i<numcampos; i++)
-                  // fprintf(stdout, "%s ", registro[i]);
+                   fprintf(stdout, "%s ", registro[i]);
           printf("\n");
           //LiberaRegistro(registro); 
 
