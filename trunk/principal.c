@@ -125,8 +125,7 @@ int main(int argc, char *argv[]) {
     /* leitura dos campos */                        
     CarregaHeader(&head, &numcampos, arqCfg);
     
-    Menu(head, arqFix, arqDlm, argv[2], separador);
-    
+   
    tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;   
 
 
@@ -152,6 +151,8 @@ int main(int argc, char *argv[]) {
           }
 */    
     
+    Menu(head, arqFix, arqDlm, argv[2], separador);
+
     fclose(arqFix);
     fclose(arqDlm);
     fclose(arqCfg);
