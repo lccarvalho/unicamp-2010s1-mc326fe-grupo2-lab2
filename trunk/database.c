@@ -115,14 +115,18 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    conteúdo de cada campo. Deixa o ponteiro de arqFix na posição apropriada
    para a próxima leitura */
    
+   
    int i;
    Record registro;
    
+   registro = malloc(sizeof(char*)*n);
+   
    for(i=0;i<n;i++){
-   registro[i] = malloc(sizeof(char*)*h[i].tamanho);
-   strncpy(registro[i],&linha[h[i].inicio-1],h[i].tamanho);
-   registro[i][h[i].tamanho] = '\0';              
                     
+   registro[i] = (char*)malloc(sizeof(char)*(h[i].tamanho+1));
+   strncpy(registro[i], &linha[h[i].inicio-1], h[i].tamanho);
+   registro[i][h[i].tamanho] = '\0';              
+   
    }
    
    return registro;
