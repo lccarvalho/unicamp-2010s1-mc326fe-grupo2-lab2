@@ -101,10 +101,11 @@ int main(int argc, char *argv[]) {
     char lingua[5];
     char separador;
     char fimRegistro;
+    char *linha;
     FILE* arqFix, * arqDlm, * arqCfg;
     char* delim;
     Header* head;
-    int i, j, numcampos, tamanhofix;
+    int i, numcampos, tamanhofix;
     Record registro;
     
     /* checa linha de comando */
@@ -126,21 +127,19 @@ int main(int argc, char *argv[]) {
     
     Menu(head, arqFix, arqDlm, argv[2], separador);
     
-    tamanhofix=0;
-    
-    for(i = 0; i < numcampos; i++)
-       tamanhofix = tamanhofix + head[i].tamanho;   
-    
-    j=0;   
+   tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;   
+
+
     //impressão dos campos do arquivo de tamanho fixo
     while(!feof(arqFix)) {
-    //      linha = fread(string, 65, 1, arqFix);               
-          registro = LeRegistroFixo(arqFix, numcampos, head);
+             
+          fread(linha, tamanhofix, 1, arqFix); 
+          registro = LeRegistroFixo(linha, numcampos, head);
           for(i=0; i<numcampos; i++)
                    fprintf(stdout, "%s ", registro[i]);
           printf("\n");
-          //LiberaRegistro(registro); ??
-          j++;
+          //LiberaRegistro(registro); 
+
           }
 /*    
     //impressão dos campos do arquivo delimitados

@@ -109,7 +109,7 @@ void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg){
     
 } /* CarregaHeader */
 
-Record LeRegistroFixo(FILE* arqFix, int n, Header* h) {
+Record LeRegistroFixo(char* linha, int n, Header* h) {
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de arqFix. Carrega Record com os endereços do 
    conteúdo de cada campo. Deixa o ponteiro de arqFix na posição apropriada
@@ -120,7 +120,8 @@ Record LeRegistroFixo(FILE* arqFix, int n, Header* h) {
    
    for(i=0;i<n;i++){
    registro[i] = malloc(sizeof(char*)*h[i].tamanho);
-   registro[i] = "valor";              
+   registro[i] = strcpy("77","55");  
+               
                     
    }
    
