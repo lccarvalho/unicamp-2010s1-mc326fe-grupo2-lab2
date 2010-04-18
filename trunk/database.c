@@ -41,6 +41,19 @@ Boolean LeConfig(char * sep, char * lingua){
    return true;
 }
 
+
+void AbreArquivoFixo(char* nome, FILE** arqFix, FILE** arqCfg){
+/* Abre o arquivo de entrada (.fix com registros de tamanho fixo) e
+   seu respectivo arquivo de configuração (.cfg) */   
+   
+   *arqFix = Fopen(nome, "r");    /* Abre arquivo de dados */
+   
+   /* abre arquivo de configuração (mesmo nome com extensão .cfg) */
+   nome[strlen(nome)-3] = '\0';
+   *arqCfg = Fopen(strcat(nome, "cfg"), "r");
+   
+} /* AbreArquivoFixo */
+   
    
 void TiraBrancosDoFinal(char* s){
 /* Elimina todos os brancos em excesso no final de uma string. */
