@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "envelope.h"
 #define branco ' '
 #define tamPrimCampoHd 20
 #define tamUltCampoHd 40
@@ -59,6 +60,10 @@ Boolean LeConfig(char* sep, char* lingua);
    interface. Retorna erro se não encontrar o arquivo ou se o conteúdo 
    for inválido */
    
+void AbreArquivoFixo(char* nome, FILE** arqFix, FILE** arqCfg);
+/* Abre o arquivo de entrada (.fix com registros de tamanho fixo) e
+   seu respectivo arquivo de configuração (.cfg) */
+
 void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg);
 /* Carrega o vetor head com os campos do banco de dados definido por arqCfg */
 

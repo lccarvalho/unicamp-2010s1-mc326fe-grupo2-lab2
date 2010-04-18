@@ -32,6 +32,10 @@ void Erro(char * msgErro) {
      exit(0);
 }
 
+/* Só pra compilar ******************************************************************************************************/
+#define OPCAO_INVALIDA "op inv\n\n"
+#define ARQ_CONVERTIDO "arq\n\n"
+
 
 int LeOpcao(){
 /* Le a opcao digitada e a retorna como um 'int' */
@@ -115,8 +119,7 @@ int main(int argc, char *argv[]) {
     Linguagem(lingua);
 
     /* abertura dos arquivos */
-    arqFix = Fopen(argv[1], "r");
-    arqCfg = Fopen("header.cfg", "r");
+    AbreArquivoFixo(argv[1], &arqFix, &arqCfg);
     
     /* leitura dos campos */                        
     CarregaHeader(&head, &numcampos, arqCfg);
