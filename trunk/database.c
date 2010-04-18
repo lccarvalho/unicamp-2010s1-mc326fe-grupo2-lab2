@@ -120,7 +120,10 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    
    for(i=0;i<n;i++){
    registro[i] = malloc(sizeof(char*)*h[i].tamanho);
-   registro[i] = strcpy("77","55");  
+   strncpy(registro[i],&linha[h[i].inicio-1],h[i].tamanho);
+   //registro[i][1]='/0';
+   
+   printf("\n\n%d\n\n - %s\n",h[i].tamanho, registro[i]);
                
                     
    }
