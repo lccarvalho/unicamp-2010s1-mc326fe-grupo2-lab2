@@ -130,9 +130,10 @@ int main(int argc, char *argv[]) {
 
 
     //impressão dos campos do arquivo de tamanho fixo
+    linha = malloc(sizeof(char)*(tamanhofix));
     while(!feof(arqFix)) {
              
-          linha = malloc(sizeof(char)*(tamanhofix));
+          
           fread(linha, tamanhofix, 1, arqFix); 
           registro = LeRegistroFixo(linha, numcampos, head);
           for(i=0; i<numcampos; i++)
@@ -141,6 +142,8 @@ int main(int argc, char *argv[]) {
           //LiberaRegistro(registro); 
 
           }
+          
+    free(linha);
           
           system("pause");
 /*    
