@@ -145,11 +145,33 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-FILE* ConverteFixoDelim(char* nome, FILE* arq, char c){
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char c, Header* head, int numcampos){
 /* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
    FILE* dlm;
+   char* str;
+   int i,tamanhofix;
+   char *linha;
+   Record registro;
+   
+   
+   tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
+   
+   linha = malloc(sizeof(char)*(tamanhofix));
+                  
+                  while(!feof(arqFix)) {
+                                       
+                      fread(linha, tamanhofix, 1, arqFix); 
+                      registro = LeRegistroFixo(linha, numcampos, head);
+                      for(i=0; i<numcampos; i++){
+                          fprintf(stdout, "%s|", registro[i]);
+                          free(registro[i]);
+                      } 
+                   free(registro);      
+                   }
+                   free(linha);                 
+   
    return dlm;
 }   
    

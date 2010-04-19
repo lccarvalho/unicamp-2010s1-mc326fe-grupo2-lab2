@@ -75,7 +75,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          
          switch(opcao){
              case 1:
-                  arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador);
+                  arqDlm = ConverteFixoDelim(TXT_OUTPUT_1, arqFix, separador, head, numcampos);
                   printf("%s", TXT_OUTPUT_1); 
                   system("pause");
              break;
