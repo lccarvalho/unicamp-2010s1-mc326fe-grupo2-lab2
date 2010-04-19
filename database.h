@@ -77,14 +77,12 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int nu
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
    
-Record LeRegistroDelim(FILE* arq, int n);
-/* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
-   campos do registro corrente de um arquivo de dados em formato delimitado
-   (arq). Carrega Record com os endereços do conteúdo de cada campo. 
-   Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
-   
+ 
 void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix);
-/* Imprime os dados de um arquivo de campos de tamanho fixo */   
+/* Imprime os dados de um arquivo de campos de tamanho fixo */  
+
+void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
+/* Imprime os dados de um arquivo de campos de tamanho variavel */   
 
 void LiberaRegistro(Record registro, int n);
 /* Libera todas as strings apontadas por record e também os apontadores */
