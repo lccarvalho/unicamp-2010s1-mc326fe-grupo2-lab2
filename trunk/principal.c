@@ -32,10 +32,6 @@ void Erro(char * msgErro) {
      exit(0);
 }
 
-/* Só pra compilar ******************************************************************************************************/
-#define OPCAO_INVALIDA "op inv\n\n"
-#define ARQ_CONVERTIDO "arq\n\n"
-
 
 int LeOpcao(){
 /* Le a opcao digitada e a retorna como um 'int' */
@@ -44,7 +40,7 @@ int LeOpcao(){
     scanf("%s", opcao);
     
     while(!VerificaDigitos(opcao)) {
-       printf("%s", OPCAO_INVALIDA); //OPCAO INVALIDA = "\nSua opcao deve conter somente numeros\nTente novamente:\n\n" ****************************************************************
+       printf("%s", TXT_OUTPUT_INV); 
        scanf("%s", opcao);
     }
     
@@ -80,7 +76,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          switch(opcao){
              case 1:
                   arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador);
-                  printf("%s", ARQ_CONVERTIDO); //ARQ_CONVERTIDO = "Arquivo convertido\n" ****************************************************************
+                  printf("%s", TXT_OUTPUT_1); 
                   system("pause");
              break;
              case 2:
@@ -116,7 +112,6 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
 
 int main(int argc, char *argv[]) {
     /* variáveis */
-    char lingua[5];
     char separador;
     char fimRegistro;
     FILE* arqFix, * arqDlm, * arqCfg;
@@ -129,11 +124,8 @@ int main(int argc, char *argv[]) {
        Erro(MSG_ERRO_NUM_ARGUMENTOS);
 
     /* arquivo de configuração */
-    if(!LeConfig(&separador, lingua))
+    if(!LeConfig(&separador))
        Erro(MSG_ERRO_CONFIG); 
-
-    /* definição da lingua de interface */
-    Linguagem(lingua);
 
     /* abertura dos arquivos */
     AbreArquivoFixo(argv[1], &arqFix, &arqCfg);
