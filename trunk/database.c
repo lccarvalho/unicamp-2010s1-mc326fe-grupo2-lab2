@@ -194,15 +194,6 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int nu
 }   
    
    
-Record LeRegistroDelim(FILE* arq, int n){
-/* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
-   campos do registro corrente de um arquivo de dados em formato delimitado
-   (arq). Carrega Record com os endereços do conteúdo de cada campo. 
-   Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
-   
-   Record registro;
-   return registro;
-}
       
 void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix){
 /* Imprime os dados de um arquivo de campos de tamanho fixo */
@@ -235,6 +226,44 @@ void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofi
      fseek(arqFix, 0, SEEK_SET);     /* Volta para o inicio do arquivo */ 
       
 } /* ImprimeArquivoFixo */
+
+void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
+/* Imprime os dados de um arquivo de campos de tamanho variavel */
+
+     int i, j;
+     char aux[100];
+     char g;
+     printf("\n");
+                  
+                
+     while(!feof(arqDel)) {
+                                       
+                  
+        /* imprime o nome do campo e seu respectivo valor */
+        for(i=0; i<numcampos-1; i++) {
+           
+           g=fgetc(arqDel);
+           j=0;
+            
+           while (g!=c){
+                aux[j]=g;
+                j++; 
+                 
+           } 
+           
+           aux[j]='\0';
+                 
+           fprintf(stdout, "%s: ", head[i].nome);
+           fprintf(stdout, "%s \n", aux);
+        }
+        printf("\n");
+                      
+     }
+                   
+                   
+     fseek(arqDel, 0, SEEK_SET);     /* Volta para o inicio do arquivo */ 
+      
+} /* ImprimeArquivoVariavel */
       
       
 void LiberaRegistro(Record registro, int n){
