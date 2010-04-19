@@ -246,6 +246,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
            while (g!=c){
                 aux[j]=g;
                 j++; 
+                g=fgetc(arqDel);
                  
            } 
            
@@ -254,6 +255,10 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
            fprintf(stdout, "%s: ", head[i].nome);
            fprintf(stdout, "%s \n", aux);
         }
+        g=fgetc(arqDel);
+        g=fgetc(arqDel);
+        g=fgetc(arqDel);
+        g=fgetc(arqDel);
         g=fgetc(arqDel);
         printf("\n");
                       
