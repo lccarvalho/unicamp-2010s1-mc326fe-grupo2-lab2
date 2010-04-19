@@ -83,3 +83,6 @@ Record LeRegistroDelim(FILE* arq, int n);
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
    Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
    
+void LiberaRegistro(Record registro, int n);
+/* Libera todas as strings apontadas por record e também os apontadores */
+   

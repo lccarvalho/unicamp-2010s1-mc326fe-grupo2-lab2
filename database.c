@@ -139,7 +139,6 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    strncpy(registro[i], &linha[h[i].inicio-1], h[i].tamanho);
    registro[i][h[i].tamanho] = '\0';              
    TiraBrancosDoFinal(registro[i]);
-   
    }
    
    return registro;
@@ -165,5 +164,13 @@ Record LeRegistroDelim(FILE* arq, int n){
    return registro;
 }
       
-   
+void LiberaRegistro(Record registro, int n){
+/* Libera todas as strings apontadas por record e também os apontadores */
+     
+     int i;
+     for(i = 0; i < n; i++)
+        free(registro[i]);
+     free(registro);
+     
+} /* LiberaRegistro */
    

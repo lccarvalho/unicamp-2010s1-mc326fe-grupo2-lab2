@@ -65,11 +65,11 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          printf("%s", OPCAO_1);
          printf("%s", OPCAO_2);
          printf("%s", OPCAO_3);
-         printf("%s", OPCAO_4);  //OPCAO_4 neste caso é "Encerrar" ****************************************************************
+         printf("%s", OPCAO_4);
          
          opcao = LeOpcao();
          while(opcao <= 0 || opcao > 4){   /* Verifica se é uma opção válida */
-             printf("%s", TXT_OUTPUT_INV);  //Alterar a mensagem ****************************************************************
+             printf("%s", TXT_OUTPUT_INV);
              opcao = LeOpcao();
          }
          
@@ -80,20 +80,30 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   system("pause");
              break;
              case 2:
-                  //impressão dos campos do arquivo de tamanho fixo
+                  /* impressão dos campos do arquivo de tamanho fixo */
+                  printf("\n");
+                  
                   linha = malloc(sizeof(char)*(tamanhofix));
                   
                   while(!feof(arqFix)) {
                                        
-                      fread(linha, tamanhofix, 1, arqFix); 
+                      fread(linha, tamanhofix, 1, arqFix);
+                      
                       registro = LeRegistroFixo(linha, numcampos, head);
-                      for(i=0; i<numcampos; i++)
-                          fprintf(stdout, "%s ", registro[i]);
+                      
+                      /* imprime o nome do campo e seu respectivo valor */
+                      for(i=0; i<numcampos-1; i++) {
+                          fprintf(stdout, "%s: ", head[i].nome);
+                          fprintf(stdout, "%s \n", registro[i]);
+                      }
                       printf("\n");
-          //LiberaRegistro(registro); 
+                      
+                      LiberaRegistro(registro, numcampos);
                    }
+                   
                    free(linha);
-                   fseek(arqFix, 0, SEEK_SET);
+                   
+                   fseek(arqFix, 0, SEEK_SET);     /* Volta para o inicio do arquivo */
                    
                    system("pause");
              break;
@@ -147,10 +157,9 @@ int main(int argc, char *argv[]) {
     Menu(head, arqFix, arqDlm, argv[2], separador, numcampos);
 
     fclose(arqFix);
-    fclose(arqDlm);
+    //fclose(arqDlm);
     fclose(arqCfg);
     free(head);
-//    free(???); LiberaRegistro(????); ***********************************************************************************
     
     system("pause");
     return 0;
