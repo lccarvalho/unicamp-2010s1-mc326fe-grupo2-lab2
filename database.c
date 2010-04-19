@@ -240,7 +240,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
                                        
                   
         /* imprime o nome do campo e seu respectivo valor */
-        for(i=0; i<numcampos-1; i++) {
+        for(i=0; i<numcampos-2; i++) {
            
            g=fgetc(arqDel);
            j=0;
@@ -256,6 +256,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
            fprintf(stdout, "%s: ", head[i].nome);
            fprintf(stdout, "%s \n", aux);
         }
+        g=fgetc(arqDel);
         printf("\n");
                       
      }
