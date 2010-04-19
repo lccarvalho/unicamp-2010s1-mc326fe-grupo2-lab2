@@ -145,33 +145,51 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char c, Header* head, int numcampos){
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix){
 /* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
    FILE* dlm;
-   char* str;
-   int i,tamanhofix;
+   int i, numRegs = 0, numBytesFix, numBytesDlm;
    char *linha;
+   char fimReg;
    Record registro;
    
+   dlm = Fopen(nome, "w");
    
-   tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
-   
+   fimReg = head[numcampos-1].msg[0];
+
    linha = malloc(sizeof(char)*(tamanhofix));
                   
-                  while(!feof(arqFix)) {
+   while(!feof(arqFix)) {
                                        
-                      fread(linha, tamanhofix, 1, arqFix); 
-                      registro = LeRegistroFixo(linha, numcampos, head);
-                      for(i=0; i<numcampos; i++){
-                          fprintf(stdout, "%s|", registro[i]);
-                          free(registro[i]);
-                      } 
-                   free(registro);      
-                   }
-                   free(linha);                 
+       numRegs++;
+       
+       fread(linha, tamanhofix, 1, arqFix);
+       
+       registro = LeRegistroFixo(linha, numcampos, head);
+       
+       for(i=0; i<numcampos-1; i++)
+           fprintf(dlm, "%s|", registro[i]);     
+       
+       fprintf(dlm, "%s\n", registro[i]);
    
+       LiberaRegistro(registro, numcampos);
+   }
+   
+   numBytesFix = ftell (arqFix);
+   numBytesDlm = ftell (dlm);
+   
+   #define NUM_REGS "Numero de registros" //*************************************************************
+   #define NUM_BYTES_FIX "Numero de bytes fix"
+   #define NUM_BYTES_DLM "Numero de bytes dlm"
+   
+   fprintf(stdout, "%s : %d\n", NUM_REGS, numRegs);
+   fprintf(stdout, "%s : %d\n", NUM_BYTES_FIX, numBytesFix);
+   fprintf(stdout, "%s : %d\n", NUM_BYTES_DLM, numBytesDlm);
+   
+   free(linha);                 
+
    return dlm;
 }   
    
@@ -185,6 +203,39 @@ Record LeRegistroDelim(FILE* arq, int n){
    Record registro;
    return registro;
 }
+      
+void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix){
+/* Imprime os dados de um arquivo de campos de tamanho fixo */
+
+     int i;
+     char *linha;
+     Record registro;
+     printf("\n");
+                  
+     linha = malloc(sizeof(char)*(tamanhofix));
+                  
+     while(!feof(arqFix)) {
+                                       
+        fread(linha, tamanhofix, 1, arqFix);
+                      
+        registro = LeRegistroFixo(linha, numcampos, head);
+                      
+        /* imprime o nome do campo e seu respectivo valor */
+        for(i=0; i<numcampos-1; i++) {
+           fprintf(stdout, "%s: ", head[i].nome);
+           fprintf(stdout, "%s \n", registro[i]);
+        }
+        printf("\n");
+                      
+        LiberaRegistro(registro, numcampos);
+     }
+                   
+     free(linha);
+                   
+     fseek(arqFix, 0, SEEK_SET);     /* Volta para o inicio do arquivo */ 
+      
+} /* ImprimeArquivoFixo */
+      
       
 void LiberaRegistro(Record registro, int n){
 /* Libera todas as strings apontadas por record e também os apontadores */

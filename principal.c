@@ -52,10 +52,8 @@ int LeOpcao(){
 void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador,int numcampos){
 /* Menu do programa */
      
-     int i, opcao, tamanhofix;
-     char *linha;
+     int opcao, tamanhofix;
      Boolean fim = false;
-     Record registro;
      
      tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
      
@@ -75,39 +73,25 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          
          switch(opcao){
              case 1:
-                  arqDlm = ConverteFixoDelim(TXT_OUTPUT_1, arqFix, separador, head, numcampos);
+                  fseek(arqFix, 0, SEEK_SET);
+                  arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos, tamanhofix);
                   printf("%s", TXT_OUTPUT_1); 
                   system("pause");
              break;
              case 2:
                   /* impressão dos campos do arquivo de tamanho fixo */
-                  printf("\n");
                   
-                  linha = malloc(sizeof(char)*(tamanhofix));
-                  
-                  while(!feof(arqFix)) {
-                                       
-                      fread(linha, tamanhofix, 1, arqFix);
-                      
-                      registro = LeRegistroFixo(linha, numcampos, head);
-                      
-                      /* imprime o nome do campo e seu respectivo valor */
-                      for(i=0; i<numcampos-1; i++) {
-                          fprintf(stdout, "%s: ", head[i].nome);
-                          fprintf(stdout, "%s \n", registro[i]);
-                      }
-                      printf("\n");
-                      
-                      LiberaRegistro(registro, numcampos);
-                   }
-                   
-                   free(linha);
-                   
-                   fseek(arqFix, 0, SEEK_SET);     /* Volta para o inicio do arquivo */
+                   fseek(arqFix, 0, SEEK_SET);
+                   ImprimeArquivoFixo(arqFix, numcampos, head, tamanhofix);
                    
                    system("pause");
              break;
              case 3:
+                  
+                  #define ARQ_DLM_NULL "vc deve criar o arquivo primeiro\n\n"
+                  if(arqDlm == NULL)
+                      fprintf(stdout, "%s", ARQ_DLM_NULL);//****************************************************************************** 
+                  else
                   //Listar arquivos de dados no formato variavel ****************************************************************
                   system("pause");
              break;

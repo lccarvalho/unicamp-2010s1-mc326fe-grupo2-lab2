@@ -72,7 +72,7 @@ Record LeRegistroFixo(char* linha, int n, Header* h);
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
    Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
    
-FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char c, Header* head, int numcampos);
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix);
 /* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
@@ -83,6 +83,9 @@ Record LeRegistroDelim(FILE* arq, int n);
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
    Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
    
+void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix);
+/* Imprime os dados de um arquivo de campos de tamanho fixo */   
+
 void LiberaRegistro(Record registro, int n);
 /* Libera todas as strings apontadas por record e também os apontadores */
    
