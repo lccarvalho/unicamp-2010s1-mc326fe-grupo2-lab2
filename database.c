@@ -126,6 +126,7 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    registro[i] = (char*)malloc(sizeof(char)*(h[i].tamanho+1));
    strncpy(registro[i], &linha[h[i].inicio-1], h[i].tamanho);
    registro[i][h[i].tamanho] = '\0';              
+   TiraBrancosDoFinal(registro[i]);
    
    }
    
