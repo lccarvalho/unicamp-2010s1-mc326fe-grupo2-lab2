@@ -145,17 +145,10 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-<<<<<<< .mine
 void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix){
 /* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */
    
-=======
-FILE* ConverteFixoDelim(char* nome, FILE* arqFix, 
-                  char sep, Header* head, int numcampos, int tamanhofix){
-/* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
-   arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
-   compactar os campos que não preenchem todo o espaço do campo fixo */
->>>>>>> .r29
+
    FILE* dlm;
    int i, numRegs = 0, numBytesFix, numBytesDlm;
    char *linha;
@@ -188,13 +181,10 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix,
    numBytesFix = ftell (arqFix); /* Conta os bytes do arquivo original */
    numBytesDlm = ftell (dlm);  /* Conta os bytes do arquivo convertido */
    
-<<<<<<< .mine
+
    fprintf(stdout, "%s %d\n", NUM_REGS, numRegs);
    fprintf(stdout, "%s %d\n", NUM_BYTES_FIX, numBytesFix);
    fprintf(stdout, "%s %d\n", NUM_BYTES_DLM, numBytesDlm);
-=======
-
->>>>>>> .r29
    
    free(linha);                 
    fclose(dlm);

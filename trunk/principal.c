@@ -87,19 +87,11 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                    system("pause");
              break;
              case 3:
-                  
-<<<<<<< .mine
+              
                   arqDlm = Fopen(nomeArqSaida, "r");
                   ImprimeArquivoDelim(arqDlm, numcampos, head, separador);
                   fclose(arqDlm);
                   
-=======
-                  
-                  if(arqDlm == NULL)
-                      fprintf(stdout, "%s", TXT_OUTPUT_3);
-                  else
-                  //Listar arquivos de dados no formato variavel ****************************************************************
->>>>>>> .r29
                   system("pause");
              break;
              case 4:
