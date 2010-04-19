@@ -32,14 +32,26 @@ Boolean VerificaDigitos(char *string) {
 } /* VerificaDigitos */
 
 
-Boolean LeConfig(char * sep, char * lingua){
-/* Procura o arquivo Config.l1b e carrega em sep o caractere que deve separar 
-   os dados no arquivo de entrada e em lingua o identificador da linua de 
-   interface. Retorna erro se não encontrar o arquivo ou se o conteúdo 
-   for inválido */
+Boolean LeConfig(char *sep){
+/* Procura o arquivo Config.l1b e carrega em lang e sep a lingua de interface 
+   do programa e o caractere que deve separar os dados no arquivo de entrada. 
+   Retorna erro se não encontrar o arquivo ou se o conteúdo for inválido */
    
-   return true;
-}
+    char lingua[5];
+    FILE *arqConfig = fopen("Config.l1b", "rt");
+    
+    if (arqConfig == NULL) 
+                        return false;     
+   
+    fgets(lingua, 5, arqConfig);  //leitura do br no arquivo –procure as funções que fazem isso                        
+    fgets(sep, 5, arqConfig);       //leitura do separador no arquivo – idem - se não me engano o da encomenda é o #                           
+
+    fclose(arqConfig); 
+   
+    Linguagem(lingua);
+
+    return true;   
+} /* LeConfig */
 
 
 void AbreArquivoFixo(char* nome, FILE** arqFix, FILE** arqCfg){
