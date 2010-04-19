@@ -30,7 +30,7 @@ void Linguagem(char *lingua){
      
 MSG_ERRO_NUM_ARGUMENTOS   = "command line should contain (1)file to be opened and (2)created";
 MSG_ERRO_CONFIG           = "Error in file config.l1b";
-MSG_ERRO_ABERTURA_ARQUIVO = "Data file not found or corrupted";
+MSG_ERRO_ABERTURA_ARQUIVO = "Data file not found or corrupted\n";
 
 /* Mensagens de erro ...??? */
 msg_erro[0]               = "Insufficient data in the input file.";
@@ -48,12 +48,25 @@ OPCAO_3                   = "3: Print data from delimited data file\n";
 OPCAO_4                   = "4: Quit\n";
 
 /* Textos da função Opcoes */
+<<<<<<< .mine
+TXT_OUTPUT_1 = "\nFile conversion success\n";
+TXT_OUTPUT_2 = "\n  \n";
+TXT_OUTPUT_3 = "\n  \n";
+TXT_OUTPUT_4 = "\n  ";
+TXT_OUTPUT_INV = "\n Invalid option (1-4) \n";
+PEDE_OPCAO = "\n Select an option: ";
+NUM_REGS = "\nNumber of registers: ";
+NUM_BYTES_FIX = "Number of bytes of original file: ";
+NUM_BYTES_DLM = "Number of bytes of converted file: ";
+ 
+=======
 TXT_OUTPUT_1              = "\nFile conversion success\n";
 TXT_OUTPUT_2              = "\n  \n";
 TXT_OUTPUT_3              = "\nChoose option 1 to create the file\n";
 TXT_OUTPUT_4              = "\n  ";
 TXT_OUTPUT_INV            = "\n Invalid option (1-4) \n";
 PEDE_OPCAO                = "\n Select an option: ";    
+>>>>>>> .r29
   
 NUM_REGS                  = "Records";
 NUM_BYTES_FIX             = "Bytes in fixed field length format";
@@ -69,7 +82,7 @@ NUM_BYTES_DLM             = "Bytes in delimited format";
   
 MSG_ERRO_NUM_ARGUMENTOS   = "linha de comando deve conter (1)arquivo a ser aberto e (2)criado";
 MSG_ERRO_CONFIG           = "Erro no arquivo config.l1b";
-MSG_ERRO_ABERTURA_ARQUIVO = "Arquivo de dados não encontrado ou defeituoso";
+MSG_ERRO_ABERTURA_ARQUIVO = "Arquivo de dados não encontrado ou defeituoso\n";
 
 /* Mensagens de erro ...??? */
 msg_erro[0]               = "Dados insuficientes no arquivo de entrada.";
@@ -88,12 +101,24 @@ OPCAO_3                   = "3: Imprimir os dados a partir de do arquivo de camp
 OPCAO_4                   = "4: Encerrar\n";
 
 /* Textos da função Opcoes */
+<<<<<<< .mine
+TXT_OUTPUT_1 = "\nConversao terminada\n";
+TXT_OUTPUT_2 = "\n  \n";
+TXT_OUTPUT_3 = "\n  \n";
+TXT_OUTPUT_4 = "\n  ";
+TXT_OUTPUT_INV = "\n Opcao invalida (1-4)\n";    
+PEDE_OPCAO     = "\n Escolha a opcao desejada: ";
+NUM_REGS = "\nNumero de registros: ";
+NUM_BYTES_FIX = "Numero de bytes do arquivo original: ";
+NUM_BYTES_DLM = "Numero de bytes do arquivo convertido: ";
+=======
 TXT_OUTPUT_1              = "\nConversao terminada\n";
 TXT_OUTPUT_2              = "\n  \n";
 TXT_OUTPUT_3              = "\nExecute a opcao 1 para criar o arquivo\n";
 TXT_OUTPUT_4              = "\n  ";
 TXT_OUTPUT_INV            = "\n Opcao invalida (1-4)\n";    
 PEDE_OPCAO                = "\n Escolha a opcao desejada: ";  
+>>>>>>> .r29
 
 NUM_REGS                  = "Numero de registros";
 NUM_BYTES_FIX             = "Numero de bytes fix";

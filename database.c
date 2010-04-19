@@ -43,8 +43,8 @@ Boolean LeConfig(char *sep){
     if (arqConfig == NULL) 
                         return false;     
    
-    fgets(lingua, 5, arqConfig);  //leitura do br no arquivo –procure as funções que fazem isso                        
-    fgets(sep, 5, arqConfig);       //leitura do separador no arquivo – idem - se não me engano o da encomenda é o #                           
+    fgets(lingua, 5, arqConfig);  //leitura do br no arquivo                        
+    fgets(sep, 5, arqConfig);       //leitura do separador no arquivo                           
 
     fclose(arqConfig); 
    
@@ -145,11 +145,17 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
+<<<<<<< .mine
+void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix){
+/* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */
+   
+=======
 FILE* ConverteFixoDelim(char* nome, FILE* arqFix, 
                   char sep, Header* head, int numcampos, int tamanhofix){
 /* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
+>>>>>>> .r29
    FILE* dlm;
    int i, numRegs = 0, numBytesFix, numBytesDlm;
    char *linha;
@@ -162,6 +168,7 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix,
 
    linha = malloc(sizeof(char)*(tamanhofix));
                   
+   /* Escreve os dados no novo arquivo */
    while(!feof(arqFix)) {
                                        
        numRegs++;
@@ -178,18 +185,19 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix,
        LiberaRegistro(registro, numcampos);
    }
    
-   numBytesFix = ftell (arqFix);
-   numBytesDlm = ftell (dlm);
+   numBytesFix = ftell (arqFix); /* Conta os bytes do arquivo original */
+   numBytesDlm = ftell (dlm);  /* Conta os bytes do arquivo convertido */
    
+<<<<<<< .mine
+   fprintf(stdout, "%s %d\n", NUM_REGS, numRegs);
+   fprintf(stdout, "%s %d\n", NUM_BYTES_FIX, numBytesFix);
+   fprintf(stdout, "%s %d\n", NUM_BYTES_DLM, numBytesDlm);
+=======
 
-   
-   fprintf(stdout, "%s : %d\n", NUM_REGS, numRegs);
-   fprintf(stdout, "%s : %d\n", NUM_BYTES_FIX, numBytesFix);
-   fprintf(stdout, "%s : %d\n", NUM_BYTES_DLM, numBytesDlm);
+>>>>>>> .r29
    
    free(linha);                 
-
-   return dlm;
+   fclose(dlm);
 }   
    
    
@@ -226,11 +234,12 @@ void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofi
       
 } /* ImprimeArquivoFixo */
 
+
 void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
 /* Imprime os dados de um arquivo de campos de tamanho variavel */
 
      int i, j;
-     char aux[100];
+     char aux[300];
      char g;
      printf("\n");
                   
