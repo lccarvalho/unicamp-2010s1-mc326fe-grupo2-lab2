@@ -74,7 +74,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          switch(opcao){
              case 1:
                   fseek(arqFix, 0, SEEK_SET);
-                  arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos, tamanhofix);
+                  ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos, tamanhofix);
                   printf("%s", TXT_OUTPUT_1); 
                   system("pause");
              break;
@@ -88,11 +88,18 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              break;
              case 3:
                   
+<<<<<<< .mine
+                  arqDlm = Fopen(nomeArqSaida, "r");
+                  ImprimeArquivoDelim(arqDlm, numcampos, head, separador);
+                  fclose(arqDlm);
+                  
+=======
                   
                   if(arqDlm == NULL)
                       fprintf(stdout, "%s", TXT_OUTPUT_3);
                   else
                   //Listar arquivos de dados no formato variavel ****************************************************************
+>>>>>>> .r29
                   system("pause");
              break;
              case 4:
@@ -125,23 +132,11 @@ int main(int argc, char *argv[]) {
     AbreArquivoFixo(argv[1], &arqFix, &arqCfg);
     
     /* leitura dos campos */                        
-    CarregaHeader(&head, &numcampos, arqCfg);   
-
-/*    
-    //impressão dos campos do arquivo delimitados
-    while(!feof(arqDlm)) {
-          registro = LeRegistroDelim(arqDlm, numcampos);
-          for(i=0; i<numcampos; i++)
-                   fprintf(stdout, "%s ", registro[i]);
-          printf("\n");
-          //LiberaRegistro(registro); ??
-          }
-*/    
+    CarregaHeader(&head, &numcampos, arqCfg);       
     
     Menu(head, arqFix, arqDlm, argv[2], separador, numcampos);
 
     fclose(arqFix);
-    //fclose(arqDlm);
     fclose(arqCfg);
     free(head);
     
