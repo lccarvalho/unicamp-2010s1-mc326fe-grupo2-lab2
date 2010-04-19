@@ -88,9 +88,9 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              break;
              case 3:
                   
-                  #define ARQ_DLM_NULL "vc deve criar o arquivo primeiro\n\n"
+                  
                   if(arqDlm == NULL)
-                      fprintf(stdout, "%s", ARQ_DLM_NULL);//****************************************************************************** 
+                      fprintf(stdout, "%s", TXT_OUTPUT_3);
                   else
                   //Listar arquivos de dados no formato variavel ****************************************************************
                   system("pause");

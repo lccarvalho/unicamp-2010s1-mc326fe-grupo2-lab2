@@ -14,7 +14,7 @@
  */
 
 #include "database.h"
-
+#include "languages.h"
 
 
 Boolean VerificaDigitos(char *string) {
@@ -145,7 +145,8 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix){
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, 
+                  char sep, Header* head, int numcampos, int tamanhofix){
 /* Retorna o ponteiro para um arquivo de "nome.dlm", com os mesmos registros de 
    arq, separados pelo delimitador c. Para tanto, invoca RemoveBrancos para
    compactar os campos que não preenchem todo o espaço do campo fixo */
@@ -180,9 +181,7 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int nu
    numBytesFix = ftell (arqFix);
    numBytesDlm = ftell (dlm);
    
-   #define NUM_REGS "Numero de registros" //*************************************************************
-   #define NUM_BYTES_FIX "Numero de bytes fix"
-   #define NUM_BYTES_DLM "Numero de bytes dlm"
+
    
    fprintf(stdout, "%s : %d\n", NUM_REGS, numRegs);
    fprintf(stdout, "%s : %d\n", NUM_BYTES_FIX, numBytesFix);

@@ -44,6 +44,9 @@ char * TXT_OUTPUT_4;
 char * TXT_OUTPUT_INV;
 char * PEDE_OPCAO;
 
+char * NUM_REGS;
+char * NUM_BYTES_FIX;
+char * NUM_BYTES_DLM;
 
 
 
