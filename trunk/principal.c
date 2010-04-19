@@ -53,11 +53,15 @@ int LeOpcao(){
 } /* LeOpcao */
 
 
-void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador){
+void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador,int numcampos){
 /* Menu do programa */
      
-     int opcao;
+     int i, opcao, tamanhofix;
+     char *linha;
      Boolean fim = false;
+     Record registro;
+     
+     tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
      
      do {
          system("cls");
@@ -80,8 +84,22 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   system("pause");
              break;
              case 2:
-                  //Listar arquivos de dados no formato fixo ****************************************************************
-                  system("pause");
+                  //impressão dos campos do arquivo de tamanho fixo
+                  linha = malloc(sizeof(char)*(tamanhofix));
+                  
+                  while(!feof(arqFix)) {
+                                       
+                      fread(linha, tamanhofix, 1, arqFix); 
+                      registro = LeRegistroFixo(linha, numcampos, head);
+                      for(i=0; i<numcampos; i++)
+                          fprintf(stdout, "%s ", registro[i]);
+                      printf("\n");
+          //LiberaRegistro(registro); 
+                   }
+                   free(linha);
+                   fseek(arqFix, 0, SEEK_SET);
+                   
+                   system("pause");
              break;
              case 3:
                   //Listar arquivos de dados no formato variavel ****************************************************************
@@ -101,12 +119,10 @@ int main(int argc, char *argv[]) {
     char lingua[5];
     char separador;
     char fimRegistro;
-    char *linha;
     FILE* arqFix, * arqDlm, * arqCfg;
     char* delim;
     Header* head;
-    int i, numcampos, tamanhofix;
-    Record registro;
+    int i, numcampos;
     
     /* checa linha de comando */
     if(argc != QTE_ARGUMENTOS)
@@ -123,29 +139,8 @@ int main(int argc, char *argv[]) {
     AbreArquivoFixo(argv[1], &arqFix, &arqCfg);
     
     /* leitura dos campos */                        
-    CarregaHeader(&head, &numcampos, arqCfg);
-    
-   
-   tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;   
+    CarregaHeader(&head, &numcampos, arqCfg);   
 
-
-    //impressão dos campos do arquivo de tamanho fixo
-    linha = malloc(sizeof(char)*(tamanhofix));
-    while(!feof(arqFix)) {
-             
-          
-          fread(linha, tamanhofix, 1, arqFix); 
-          registro = LeRegistroFixo(linha, numcampos, head);
-          for(i=0; i<numcampos; i++)
-                   fprintf(stdout, "%s ", registro[i]);
-          printf("\n");
-          //LiberaRegistro(registro); 
-
-          }
-          
-    free(linha);
-          
-          system("pause");
 /*    
     //impressão dos campos do arquivo delimitados
     while(!feof(arqDlm)) {
@@ -157,7 +152,7 @@ int main(int argc, char *argv[]) {
           }
 */    
     
-    Menu(head, arqFix, arqDlm, argv[2], separador);
+    Menu(head, arqFix, arqDlm, argv[2], separador, numcampos);
 
     fclose(arqFix);
     fclose(arqDlm);
