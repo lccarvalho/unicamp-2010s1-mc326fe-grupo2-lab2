@@ -73,9 +73,13 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          
          switch(opcao){
              case 1:
+                  /* converte um arquivo com campos de tamanho fixo para um de 
+                     campos de tamanho variavel */
+                  
                   fseek(arqFix, 0, SEEK_SET);
                   ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos, tamanhofix);
                   printf("%s", TXT_OUTPUT_1); 
+                  
                   system("pause");
              break;
              case 2:
@@ -87,7 +91,8 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                    system("pause");
              break;
              case 3:
-              
+                  /* impressão dos campos do arquivo de tamanho variavel */
+                  
                   arqDlm = Fopen(nomeArqSaida, "r");
                   ImprimeArquivoDelim(arqDlm, numcampos, head, separador);
                   fclose(arqDlm);
@@ -106,19 +111,17 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
 int main(int argc, char *argv[]) {
     /* variáveis */
     char separador;
-    char fimRegistro;
-    FILE* arqFix, * arqDlm, * arqCfg;
-    char* delim;
+    FILE *arqFix, *arqDlm, *arqCfg;
     Header* head;
-    int i, numcampos;
+    int numcampos;
+    
+    /* arquivo de configuração */
+    if(!LeConfig(&separador))
+       Erro(MSG_ERRO_CONFIG);
     
     /* checa linha de comando */
     if(argc != QTE_ARGUMENTOS)
        Erro(MSG_ERRO_NUM_ARGUMENTOS);
-
-    /* arquivo de configuração */
-    if(!LeConfig(&separador))
-       Erro(MSG_ERRO_CONFIG); 
 
     /* abertura dos arquivos */
     AbreArquivoFixo(argv[1], &arqFix, &arqCfg);
@@ -129,7 +132,6 @@ int main(int argc, char *argv[]) {
     Menu(head, arqFix, arqDlm, argv[2], separador, numcampos);
 
     fclose(arqFix);
-    fclose(arqCfg);
     free(head);
     
     system("pause");

@@ -28,7 +28,7 @@ void Linguagem(char *lingua){
 /********* 1 - INGLÊS EUA *****************************************************/  
    case 101110:   //ingles - en           
      
-MSG_ERRO_NUM_ARGUMENTOS   = "command line should contain (1)file to be opened and (2)created";
+MSG_ERRO_NUM_ARGUMENTOS   = "Command line should contain (1)file to be opened and (2)created";
 MSG_ERRO_CONFIG           = "Error in file config.l1b";
 MSG_ERRO_ABERTURA_ARQUIVO = "Data file not found or corrupted\n";
 
@@ -68,7 +68,7 @@ NUM_BYTES_DLM = "Number of bytes of converted file: ";
 /******2 - PORTUGUÊS BRASIL****************************************************/  
      default:    //brasil - br   ou vazio
   
-MSG_ERRO_NUM_ARGUMENTOS   = "linha de comando deve conter (1)arquivo a ser aberto e (2)criado";
+MSG_ERRO_NUM_ARGUMENTOS   = "Linha de comando deve conter (1)arquivo a ser aberto e (2)criado";
 MSG_ERRO_CONFIG           = "Erro no arquivo config.l1b";
 MSG_ERRO_ABERTURA_ARQUIVO = "Arquivo de dados não encontrado ou defeituoso\n";
 
