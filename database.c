@@ -121,6 +121,7 @@ void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg){
     
 } /* CarregaHeader */
 
+
 Record LeRegistroFixo(char* linha, int n, Header* h) {
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de arqFix. Carrega Record com os endereços do 
@@ -145,12 +146,12 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix){
+void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos){
 /* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */
    
 
    FILE* dlm;
-   int i, numRegs = 0, numBytesFix, numBytesDlm;
+   int i, numRegs = 0, numBytesFix, numBytesDlm, tamanhofix;
    char *linha;
    char fimReg;
    Record registro;
@@ -159,6 +160,8 @@ void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int num
    
    fimReg = head[numcampos-1].msg[0];
 
+   tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
+   
    linha = malloc(sizeof(char)*(tamanhofix));
                   
    /* Escreve os dados no novo arquivo */
@@ -192,16 +195,18 @@ void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int num
    
    
       
-void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix){
+void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head){
 /* Imprime os dados de um arquivo de campos de tamanho fixo */
 
-     int i;
+     int i, tamanhofix;
      char *linha;
      Record registro;
      printf("\n");
                   
+     tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
+     
      linha = malloc(sizeof(char)*(tamanhofix));
-                  
+     
      while(!feof(arqFix)) {
                                        
         fread(linha, tamanhofix, 1, arqFix);
@@ -289,4 +294,49 @@ void LiberaRegistro(Record registro, int n){
      free(registro);
      
 } /* LiberaRegistro */
+
+
+Boolean PesquisaRegistro(char *nomeArqSaida, char* chavePrim, Record *registro){
+/* Procura pela chave primaria 'chavePrim' no arquivo de formato variavel.
+   Se encontrar, coloca em 'registro' as informações e retorna true, caso 
+   contrário retorna false */
    
+   
+}
+   
+void ImprimeRegistro(Record registro, Header *head, int numcampos){
+/* Imprime todos os campos de um registro */
+
+
+}
+
+
+Boolean VerificaRA(char *ra){
+/* Verifica se um ra é válido (6 caracteres numéricos) */
+
+    return true;
+}
+
+
+void ExtraiChaves(FILE *arqFix, Header *head){
+/* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de
+   dados arqFix, junto com os respectivos endereços dos registros no arquivo */
+
+   /* arquivo tem o formato
+      
+      ****** #
+      ****** #
+      ****** #
+     
+      onde ****** é o ra e # o endereço */
+}
+
+
+void ClassificaChavePrimaria(){
+/* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
+   classificando-o */
+
+
+}
+
+

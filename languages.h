@@ -36,6 +36,10 @@ char * OPCAO_2;
 char * OPCAO_3;
 char * OPCAO_4;
 char * OPCAO_5;
+char * OPCAO_6;
+char * OPCAO_7;
+char * OPCAO_8;
+char * OPCAO_9;
 
 /* Textos da função Opcoes */
 char * TXT_OUTPUT_1;

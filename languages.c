@@ -33,7 +33,7 @@ MSG_ERRO_CONFIG           = "Error in file config.l1b";
 MSG_ERRO_ABERTURA_ARQUIVO = "Data file not found or corrupted\n";
 MSG_ERRO_MEMORIA          = "Insufficient memory\n";
 
-/* Mensagens de erro ...??? */
+/* Mensagens de erro */
 msg_erro[0]               = "Insufficient data in the input file.";
 msg_erro[1]               = "Invalid name.";
 msg_erro[2]               = "RA invalid.";
@@ -46,7 +46,8 @@ TELA_PRINCIPAL            = "Project 2a\n\nOptions\n";
 OPCAO_1                   = "1: Create delimited data file from fixed length field data file\n";
 OPCAO_2                   = "2: Print data from fixed length field data file\n";
 OPCAO_3                   = "3: Print data from delimited data file\n";
-OPCAO_4                   = "4: Quit\n";
+
+OPCAO_9                   = "9: Quit\n";
 
 /* Textos da função Opcoes */
 
@@ -74,7 +75,7 @@ MSG_ERRO_CONFIG           = "Erro no arquivo config.l1b";
 MSG_ERRO_ABERTURA_ARQUIVO = "Arquivo de dados não encontrado ou defeituoso\n";
 MSG_ERRO_MEMORIA          = "Memória insuficiente\n"; 
 
-/* Mensagens de erro ...??? */
+/* Mensagens de erro */
 msg_erro[0]               = "Dados insuficientes no arquivo de entrada.";
 msg_erro[1]               = "Nome invalido.";
 msg_erro[2]               = "RA invalido.";
@@ -88,7 +89,8 @@ TELA_PRINCIPAL            = "Projeto 2a\n\nOpcoes\n";
 OPCAO_1                   = "1: Criar arquivo delimitado a partir de arquivo de campo fixo\n";
 OPCAO_2                   = "2: Imprimir os dados a partir de do arquivo de campo fixo\n";
 OPCAO_3                   = "3: Imprimir os dados a partir de do arquivo de campo delimitado\n";
-OPCAO_4                   = "4: Encerrar\n";
+
+OPCAO_9                   = "9: Encerrar\n";
 
 /* Textos da função Opcoes */
 

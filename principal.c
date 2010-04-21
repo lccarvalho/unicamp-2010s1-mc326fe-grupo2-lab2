@@ -48,14 +48,23 @@ int LeOpcao(){
 
 } /* LeOpcao */
 
+#define PEDIR_CHAVE_PRIMARIA "" //TEMPORARIO**********************************************************************************
+#define REGISTRO_INEXISTENTE ""
+#define ARQ_CHAVES_CRIADO ""
+#define ARQ_CHAVES_CLASSIFICADO ""
+#define OPCAO_4 "4\n"
+#define OPCAO_5 "5\n"
+#define OPCAO_6 "6\n"
+#define OPCAO_7 "7\n"
+#define OPCAO_8 "8\n"
 
 void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador,int numcampos){
 /* Menu do programa */
      
-     int opcao, tamanhofix;
+     int opcao;
+     char *chavePrim;
      Boolean fim = false;
-     
-     tamanhofix = + head[numcampos-1].inicio+head[numcampos-1].tamanho;
+     Record registro;
      
      do {
          system("cls");
@@ -64,9 +73,14 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          printf("%s", OPCAO_2);
          printf("%s", OPCAO_3);
          printf("%s", OPCAO_4);
+         printf("%s", OPCAO_5);
+         printf("%s", OPCAO_6);
+         printf("%s", OPCAO_7);
+         printf("%s", OPCAO_8);
+         printf("%s", OPCAO_9);
          
          opcao = LeOpcao();
-         while(opcao <= 0 || opcao > 4){   /* Verifica se é uma opção válida */
+         while(opcao <= 0 || opcao > 9){   /* Verifica se é uma opção válida */
              printf("%s", TXT_OUTPUT_INV);
              opcao = LeOpcao();
          }
@@ -77,7 +91,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                      campos de tamanho variavel */
                   
                   fseek(arqFix, 0, SEEK_SET);
-                  ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos, tamanhofix);
+                  ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos);
                   printf("%s", TXT_OUTPUT_1); 
                   
                   system("pause");
@@ -86,7 +100,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* impressão dos campos do arquivo de tamanho fixo */
                   
                    fseek(arqFix, 0, SEEK_SET);
-                   ImprimeArquivoFixo(arqFix, numcampos, head, tamanhofix);
+                   ImprimeArquivoFixo(arqFix, numcampos, head);
                    
                    system("pause");
              break;
@@ -100,6 +114,58 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   system("pause");
              break;
              case 4:
+                  /* pesquisa um registro pela chave primária */
+                  
+                  printf("%s :", PEDIR_CHAVE_PRIMARIA);
+                  scanf("%s", chavePrim);
+                  
+                  if(VerificaRA(chavePrim)){
+                     
+                     if(PesquisaRegistro(nomeArqSaida, chavePrim, &registro)){
+                         ImprimeRegistro(registro, head, numcampos);
+                         LiberaRegistro(registro, numcampos);
+                     }
+                     else
+                         printf("%s", REGISTRO_INEXISTENTE);
+                  }
+                  else
+                      printf("%s", msg_erro[2]);   /* RA Invalido */
+                         
+                  
+                  system("pause");
+             break;
+             case 5:
+                  /* Extração das chaves primárias */
+                  
+                  ExtraiChaves(arqFix, head);
+                  printf("%s", ARQ_CHAVES_CRIADO);
+                  
+                  system("pause");
+             break;
+             case 6:
+                  /* Classificação do arquivo das chaves */
+                  
+                  ClassificaChavePrimaria();
+                  printf("%s", ARQ_CHAVES_CLASSIFICADO);
+                  
+                  system("pause");
+             break;
+             case 7:
+                  /* Listar o arquivo com a extração das chaves geradas na opção 5*/
+                  
+                  
+                  
+                  system("pause");
+             break;
+             case 8:
+                  /* Listar o arquivo com a extração das chaves classificadas
+                     geradas na opção 6*/
+                  
+                  
+                  
+                  system("pause");
+             break;
+             case 9:
                   fim = true;
              break;
          }
