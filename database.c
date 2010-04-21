@@ -20,6 +20,36 @@
 #include "languages.h"
 
 
+/* Funções Auxiliares (não incluídas em database.h) ***************************/
+void TiraBrancosDoFinal(char* s){
+/* Elimina todos os brancos em excesso no final de uma string. */
+    
+    int i = strlen(s) - 1;     //Último elemento da string
+    while(i >= 0 && s[i] == branco)
+       i--;
+    s[i+1] = '\0';
+    
+} /* TiraBrancosDoFinal */
+
+
+int TamMaxRegistro(Header* h, int campos){
+/* Calcula o tamanho máximo do registro de um arquivo de dados configurado por 
+   head, com n campos */
+   int i, tam = 0;
+   for(i=0;i<campos;i++) tam += h[i].tamanho;
+   tam += campos;                            //para caber os delimitadores
+   return tam;
+   
+} /*TamMaxRegistro*/
+
+
+
+
+
+/*************************** Funções Auxiliares (não incluídas em database.h) */
+
+
+
 Boolean VerificaDigitos(char *string) {
 /* Retorna "true" se a string só contém digitos de 0-9
    ou retorna "false" caso contrário */
@@ -70,17 +100,6 @@ void AbreArquivoFixo(char* nome, FILE** arqFix, FILE** arqCfg){
    
 } /* AbreArquivoFixo */
    
-   
-void TiraBrancosDoFinal(char* s){
-/* Elimina todos os brancos em excesso no final de uma string. */
-    
-    int i = strlen(s) - 1;     //Último elemento da string
-    while(i >= 0 && s[i] == branco)
-       i--;
-    s[i+1] = '\0';
-    
-} /* TiraBrancosDoFinal */
-
 
 void CarregaHeader(Header** h, int* numcampos, FILE* arqCfg){
 /* Carrega o vetor head com os campos do banco de dados definido por arqCfg */
@@ -150,7 +169,7 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 }
    
 
-void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos){
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos){
 /* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */
    
 
@@ -195,6 +214,7 @@ void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int num
    
    free(linha);                 
    fclose(dlm);
+   return dlm;
 }   
    
    
@@ -237,6 +257,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
      char g, f;
      printf("\n");
      
+     rewind(arqDel);
      f=fgetc(arqDel);                  
                 
      while(!feof(arqDel)) {
@@ -295,17 +316,45 @@ void LiberaRegistro(Record registro, int n){
 } /* LiberaRegistro */
 
 
-Boolean PesquisaRegistro(char *nomeArqSaida, char* chavePrim, Record *registro){
-/* Procura pela chave primaria 'chavePrim' no arquivo de formato variavel.
+Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, int n){
+/* Procura pela chave primaria 'key' no arquivo de formato variavel
+   separado por sep, com n campos e linha de tamanho máximo max.
    Se encontrar, coloca em 'registro' as informações e retorna true, caso 
    contrário retorna false */
-   
-   
+
+   FILE* f = Fopen(arq, "rt");
+   char* linha = malloc(sizeof(char)*max);
+   int i = 0;
+  
+   rec = malloc(sizeof(char*)*n);
+//  rewind(dlm);
+  
+
+   while(!feof(f)) {
+                    fgets(linha, max, f);
+                      
+                    rec[0] = strtok(linha,&sep);
+
+                    if (strcmp(rec[0],key) == 0) {     //achou a chave
+                       while (rec[i] != NULL){
+                             i++;
+                             rec[i] = strtok (NULL, &sep);
+                       }
+/*teste*/
+                     for(i=0; i<n-1; i++) 
+                              printf("  %d) %s\n", (i+1), rec[i]);
+/*fim teste*/                                                 
+                     return true;
+    
+                    }
+   }
+   return false;  
+
 } /* PesquisaRegistro */
-   
+
+
 void ImprimeRegistro(Record registro, Header *head, int numcampos){
 /* Imprime todos os campos de um registro */
-
    int i;
    
    for(i=0; i<numcampos-1; i++) {
@@ -342,7 +391,7 @@ void ExtraiChaves(FILE *arqFix, Header *head){
 void ClassificaChavePrimaria(){
 /* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
    classificando-o */
-
+   system("sort chaves.ind /o chavesClas.ind");
 
 } /* ClassificaChavePrimaria */
 
