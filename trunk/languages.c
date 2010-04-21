@@ -5,13 +5,8 @@
 /*          Luiz Claudio Carvalho      RA 800578                              */
 /*                                                                            */
 /* MC236EF  1o semestre 2010                                           UNICAMP*/
-/* Laboratório    01B - Apresentação de Nome e RA de alunos                   */
-/*                      a partir de dados lidos em arquivo e com múltiplas    */
-/*                      opções de lingua de interface                         */
-/******************************************************************************/
-/*
- * languages.c - Módulo de configuração da lingua da interface
- */
+
+/* languages.c - Módulo de configuração da lingua da interface */
 
 #include "languages.h"
 
@@ -24,7 +19,8 @@ void LeMensagem(FILE *lang, char **msg){
      *msg = Malloc(sizeof(char)*strlen(buffer));
      buffer[strlen(buffer)-1] = '\0';
      strcpy(*msg, buffer);
-}
+
+} /* LeMensagem */
 
 
 void Linguagem(char *lingua){
@@ -70,6 +66,8 @@ void Linguagem(char *lingua){
    LeMensagem(lang, &ERRO_TEL);
    LeMensagem(lang, &ERRO_SEXO);
    LeMensagem(lang, &ERRO_CURSO);
+   LeMensagem(lang, &CHAVE_PRIM);
+   LeMensagem(lang, &ENDERECO);
 
    fclose(lang);
      
@@ -108,6 +106,8 @@ void LiberaMensagens(){
    free(&ERRO_TEL);
    free(&ERRO_SEXO);
    free(&ERRO_CURSO);
+   free(&CHAVE_PRIM);
+   free(&ENDERECO);
    
    
 } /* LiberaMensagens */

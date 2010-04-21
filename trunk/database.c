@@ -5,13 +5,16 @@
 /*          Luiz Claudio Carvalho      RA 800578                              */
 /*                                                                            */
 /* MC236EF  1o semestre 2010                                           UNICAMP*/
-/* Laboratório    02A - Programa para leitura de dados de arquivo em formato  */
-/*                      de campo fixo, conversão para formato delimitado e    */
-/*                      impressão nos dois formatos                           */
+/* Laboratório    02 
+   - Manipulacao de arquivos com registros de tamanho fixo, campos de tamanho
+     fixo e campos de tamanho variavel.
+   - Construcao de uma biblioteca de funcoes que permitam realizar as operacoes
+     de pesquisa, alteracao, remocao e insercao de registros e campos em um
+     arquivo.
+     - Construcao de funcoes para criacao e pesquisa de indices;
 /******************************************************************************/
-/*
- * database.c - conjunto de funções para manipulação de banco de dados
- */
+
+/* database.c - conjunto de funções para manipulação de banco de dados */
 
 #include "database.h"
 #include "languages.h"
@@ -210,17 +213,12 @@ void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head){
      
      while(!feof(arqFix)) {
                                        
-        fread(linha, tamanhofix, 1, arqFix);
+        fread(linha, tamanhofix, 1, arqFix);  /* pega uma linha do arquivo */
                       
-        registro = LeRegistroFixo(linha, numcampos, head);
+        registro = LeRegistroFixo(linha, numcampos, head); /*transforma em um registro */
                       
-        /* imprime o nome do campo e seu respectivo valor */
-        for(i=0; i<numcampos-1; i++) {
-           fprintf(stdout, "%s: ", head[i].nome);
-           fprintf(stdout, "%s \n", registro[i]);
-        }
-        printf("\n");
-                      
+        ImprimeRegistro(registro, head, numcampos); /* imprime */
+            
         LiberaRegistro(registro, numcampos);
      }
                    
@@ -303,13 +301,20 @@ Boolean PesquisaRegistro(char *nomeArqSaida, char* chavePrim, Record *registro){
    contrário retorna false */
    
    
-}
+} /* PesquisaRegistro */
    
 void ImprimeRegistro(Record registro, Header *head, int numcampos){
 /* Imprime todos os campos de um registro */
 
-
-}
+   int i;
+   
+   for(i=0; i<numcampos-1; i++) {
+       fprintf(stdout, "%s: ", head[i].nome);
+       fprintf(stdout, "%s \n", registro[i]);
+   }
+   printf("\n");
+   
+} /* ImprimeRegistro */
 
 
 Boolean VerificaRA(char *ra){
@@ -330,7 +335,8 @@ void ExtraiChaves(FILE *arqFix, Header *head){
       ****** #
      
       onde ****** é o ra e # o endereço */
-}
+
+}/* ExtraiChaves */
 
 
 void ClassificaChavePrimaria(){
@@ -338,6 +344,20 @@ void ClassificaChavePrimaria(){
    classificando-o */
 
 
-}
+} /* ClassificaChavePrimaria */
 
 
+void ImprimeChaves(FILE *arq){
+/* Imprime as chaves primarias e o endereço */
+
+   char *leArq[16];
+   
+   while(!feof(arq)){ 
+      fscanf(arq, "%s", leArq);
+      printf("\n%s: %s\n", CHAVE_PRIM, leArq);
+      fscanf(arq, "%s", leArq);
+      printf("%s: %s\n", ENDERECO, leArq);
+   }
+   printf("\n");
+   
+} /* ImprimeChaves */

@@ -5,16 +5,15 @@
 /*          Luiz Claudio Carvalho      RA 800578                              */
 /*                                                                            */
 /* MC236EF  1o semestre 2010                                           UNICAMP*/
-/* Laboratório    02A - Programa para leitura de dados de arquivo em formato  */
-/*                      de campo fixo, conversão para formato delimitado e    */
-/*                      impressão nos dois formatos                           */
+/* Laboratório    02 
+   - Manipulacao de arquivos com registros de tamanho fixo, campos de tamanho
+     fixo e campos de tamanho variavel.
+   - Construcao de uma biblioteca de funcoes que permitam realizar as operacoes
+     de pesquisa, alteracao, remocao e insercao de registros e campos em um
+     arquivo.
+     - Construcao de funcoes para criacao e pesquisa de indices;
 /******************************************************************************/
-/*
-   1a versão de principal.c
-   Não implementa menus, apenas executa em sequencia 
-   as tarefas das opções 1, 2 e 3
-   Para testes
-              */
+
               
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,6 +56,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
      char *chavePrim;
      Boolean fim = false;
      Record registro;
+     FILE *arqChaves;
      
      do {
          system("cls");
@@ -113,6 +113,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   if(VerificaRA(chavePrim)){
                      
+                     
                      if(PesquisaRegistro(nomeArqSaida, chavePrim, &registro)){
                          ImprimeRegistro(registro, head, numcampos);
                          LiberaRegistro(registro, numcampos);
@@ -145,7 +146,11 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              case 7:
                   /* Listar o arquivo com a extração das chaves geradas na opção 5*/
                   
+                  arqChaves = Fopen("chaves.ind", "r");
                   
+                  ImprimeChaves(arqChaves);
+                  
+                  fclose(arqChaves);
                   
                   system("pause");
              break;
@@ -153,7 +158,11 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Listar o arquivo com a extração das chaves classificadas
                      geradas na opção 6*/
                   
+                  arqChaves = Fopen("chavesClas.ind", "r");
                   
+                  ImprimeChaves(arqChaves);
+                  
+                  fclose(arqChaves);
                   
                   system("pause");
              break;

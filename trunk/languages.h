@@ -5,13 +5,8 @@
 /*          Luiz Claudio Carvalho      RA 800578                              */
 /*                                                                            */
 /* MC236EF  1o semestre 2010                                           UNICAMP*/
-/* Laboratório    01B - Apresentação de Nome e RA de alunos                   */
-/*                      a partir de dados lidos em arquivo e com múltiplas    */
-/*                      opções de lingua de interface                         */
-/******************************************************************************/
-/*
- * languages.h - Módulo de configuração da lingua da interface
- */
+
+/* languages.h - Módulo de configuração da lingua da interface */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +43,8 @@ char * PEDIR_CHAVE_PRIMARIA;
 char * REGISTRO_INEXISTENTE;
 char * ARQ_CHAVES_CRIADO;
 char * ARQ_CHAVES_CLASSIFICADO;
+char * CHAVE_PRIM;
+char * ENDERECO;
 
 /* erros nos registros */
 char * ERRO_RA;
