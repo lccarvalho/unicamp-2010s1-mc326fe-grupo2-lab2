@@ -22,6 +22,7 @@ char * MSG_ERRO_NUM_ARGUMENTOS;
 char * MSG_ERRO_CONFIG;
 char * MSG_ERRO_ABERTURA_ARQUIVO;
 char * MSG_ERRO_ARQ_CFG_BDADOS;
+char * MSG_ERRO_MEMORIA;
 
 
 /* Mensagens de erro na validação de dados de entrada
