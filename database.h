@@ -5,13 +5,16 @@
 /*          Luiz Claudio Carvalho      RA 800578                              */
 /*                                                                            */
 /* MC236EF  1o semestre 2010                                           UNICAMP*/
-/* Laboratório    02A - Programa para leitura de dados de arquivo em formato  */
-/*                      de campo fixo, conversão para formato delimitado e    */
-/*                      impressão nos dois formatos                           */
+/* Laboratório    02 
+   - Manipulacao de arquivos com registros de tamanho fixo, campos de tamanho
+     fixo e campos de tamanho variavel.
+   - Construcao de uma biblioteca de funcoes que permitam realizar as operacoes
+     de pesquisa, alteracao, remocao e insercao de registros e campos em um
+     arquivo.
+     - Construcao de funcoes para criacao e pesquisa de indices;
 /******************************************************************************/
-/*
- * database.h - conjunto de funções para manipulação de banco de dados
- */
+
+/* database.h - conjunto de funções para manipulação de banco de dados */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -104,3 +107,5 @@ void ClassificaChavePrimaria();
 /* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
    classificando-o */
 
+void ImprimeChaves(FILE *arq);
+/* Imprime as chaves primarias e o endereço */

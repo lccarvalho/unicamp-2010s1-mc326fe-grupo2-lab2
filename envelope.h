@@ -1,7 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
+/******************************************************************************/
+/* Grupo 2:                                                                   */
+/*          Felipe Augusto da Silva    RA 096993                              */
+/*          Lucas Barbi Rezende        RA 097042                              */
+/*          Luiz Claudio Carvalho      RA 800578                              */
+/*                                                                            */
+/* MC236EF  1o semestre 2010                                           UNICAMP*/
 
 /* envelope.h - conjunto de funções envelopadoras */
+
+#include <stdio.h>
+#include <stdlib.h>
 
 
 
