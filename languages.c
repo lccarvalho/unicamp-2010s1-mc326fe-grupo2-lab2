@@ -15,98 +15,100 @@
 
 #include "languages.h"
 
+
+void LeMensagem(FILE *lang, char **msg){
+/* Le uma mensagem no arquivo 'lang' e coloca em 'msg' */
+     
+     char buffer[256];
+     fgets(buffer, 256, lang);
+     *msg = Malloc(sizeof(char)*strlen(buffer));
+     buffer[strlen(buffer)-1] = '\0';
+     strcpy(*msg, buffer);
+}
+
+
 void Linguagem(char *lingua){
 /* Configura as mensagens de tela do programa conforme a lingua em uso, 
-   identificada no arquivo config.l1b
-   */        
+   identificada no arquivo config.l1b */        
    
-   int opcao = (int)(lingua[0])*1000 + (int)(lingua[1]);
+   FILE *lang;
+   strcat(lingua, ".lng");
+   lang = fopen(lingua, "r");
+   
+   if(lang == NULL) {
+      fprintf(stderr, "Language file not found\n");
+      system("pause");
+      exit (0);
+   }
+   
+   LeMensagem(lang, &MSG_ERRO_NUM_ARGUMENTOS);
+   LeMensagem(lang, &MSG_ERRO_CONFIG);
+   LeMensagem(lang, &MSG_ERRO_ABERTURA_ARQUIVO);
+   LeMensagem(lang, &MSG_ERRO_MEMORIA);
+   LeMensagem(lang, &TELA_PRINCIPAL);
+   LeMensagem(lang, &OPCAO_1);
+   LeMensagem(lang, &OPCAO_2);
+   LeMensagem(lang, &OPCAO_3);
+   LeMensagem(lang, &OPCAO_4);
+   LeMensagem(lang, &OPCAO_5);
+   LeMensagem(lang, &OPCAO_6);
+   LeMensagem(lang, &OPCAO_7);
+   LeMensagem(lang, &OPCAO_8);
+   LeMensagem(lang, &OPCAO_9);
+   LeMensagem(lang, &CONV_TERMINADA);
+   LeMensagem(lang, &OPCAO_INV);
+   LeMensagem(lang, &PEDE_OPCAO);
+   LeMensagem(lang, &NUM_REGS);
+   LeMensagem(lang, &NUM_BYTES_FIX);
+   LeMensagem(lang, &NUM_BYTES_DLM);
+   LeMensagem(lang, &PEDIR_CHAVE_PRIMARIA);
+   LeMensagem(lang, &REGISTRO_INEXISTENTE);
+   LeMensagem(lang, &ARQ_CHAVES_CRIADO);
+   LeMensagem(lang, &ARQ_CHAVES_CLASSIFICADO);
+   LeMensagem(lang, &ERRO_RA);
+   LeMensagem(lang, &ERRO_NOME);
+   LeMensagem(lang, &ERRO_TEL);
+   LeMensagem(lang, &ERRO_SEXO);
+   LeMensagem(lang, &ERRO_CURSO);
 
-   switch(opcao){
-
-
-/********* 1 - INGLÊS EUA *****************************************************/  
-   case 101110:   //ingles - en           
-     
-MSG_ERRO_NUM_ARGUMENTOS   = "Command line should contain (1)file to be opened and (2)created";
-MSG_ERRO_CONFIG           = "Error in file config.l1b";
-MSG_ERRO_ABERTURA_ARQUIVO = "Data file not found or corrupted\n";
-MSG_ERRO_MEMORIA          = "Insufficient memory\n";
-
-/* Mensagens de erro */
-msg_erro[0]               = "Insufficient data in the input file.";
-msg_erro[1]               = "Invalid name.";
-msg_erro[2]               = "RA invalid.";
-msg_erro[3]               = "Invalid character in name: ";
-msg_erro[4]               = "Invalid character in RA: ";
-msg_erro[5]               = "Invalid character to be searched: ";
-
-/* Menu Principal */
-TELA_PRINCIPAL            = "Project 2a\n\nOptions\n";
-OPCAO_1                   = "1: Create delimited data file from fixed length field data file\n";
-OPCAO_2                   = "2: Print data from fixed length field data file\n";
-OPCAO_3                   = "3: Print data from delimited data file\n";
-
-OPCAO_9                   = "9: Quit\n";
-
-/* Textos da função Opcoes */
-
-TXT_OUTPUT_1      = "\nFile conversion success\n";
-TXT_OUTPUT_2      = "\n  \n";
-TXT_OUTPUT_3      = "\n  \n";
-TXT_OUTPUT_4      = "\n  ";
-TXT_OUTPUT_INV    = "\n Invalid option (1-4) \n";
-PEDE_OPCAO        = "\n Select an option: ";
-NUM_REGS          = "\nNumber of registers: ";
-NUM_BYTES_FIX     = "Number of bytes of original file: ";
-NUM_BYTES_DLM     = "Number of bytes of converted file: ";
- 
-/**********************************************************INGLÊS EUA *********/  
-  
-     break;
-     
-     
-     
-/******2 - PORTUGUÊS BRASIL****************************************************/  
-     default:    //brasil - br   ou vazio
-  
-MSG_ERRO_NUM_ARGUMENTOS   = "Linha de comando deve conter (1)arquivo a ser aberto e (2)criado";
-MSG_ERRO_CONFIG           = "Erro no arquivo config.l1b";
-MSG_ERRO_ABERTURA_ARQUIVO = "Arquivo de dados não encontrado ou defeituoso\n";
-MSG_ERRO_MEMORIA          = "Memória insuficiente\n"; 
-
-/* Mensagens de erro */
-msg_erro[0]               = "Dados insuficientes no arquivo de entrada.";
-msg_erro[1]               = "Nome invalido.";
-msg_erro[2]               = "RA invalido.";
-msg_erro[3]               = "Caractere inválido no nome: ";
-msg_erro[4]               = "Caractere inválido no RA: ";
-msg_erro[5]               = "Caractere invalido a ser procurado: ";
-
-
-/* Menu Principal */
-TELA_PRINCIPAL            = "Projeto 2a\n\nOpcoes\n";
-OPCAO_1                   = "1: Criar arquivo delimitado a partir de arquivo de campo fixo\n";
-OPCAO_2                   = "2: Imprimir os dados a partir de do arquivo de campo fixo\n";
-OPCAO_3                   = "3: Imprimir os dados a partir de do arquivo de campo delimitado\n";
-
-OPCAO_9                   = "9: Encerrar\n";
-
-/* Textos da função Opcoes */
-
-TXT_OUTPUT_1 = "\nConversao terminada\n";
-TXT_OUTPUT_2 = "\n  \n";
-TXT_OUTPUT_3 = "\n  \n";
-TXT_OUTPUT_4 = "\n  ";
-TXT_OUTPUT_INV = "\n Opcao invalida (1-4)\n";    
-PEDE_OPCAO     = "\n Escolha a opcao desejada: ";
-NUM_REGS = "\nNumero de registros: ";
-NUM_BYTES_FIX = "Numero de bytes do arquivo original: ";
-NUM_BYTES_DLM = "Numero de bytes do arquivo convertido: ";
-
-/******************************************************PORTUGUÊS BRASIL********/  
-
-     } /* switch */       
+   fclose(lang);
      
 } /* Linguagem */
+
+
+void LiberaMensagens(){
+/* Libera o espaço alocado para as mensagens */
+
+   free(&MSG_ERRO_NUM_ARGUMENTOS);
+   free(&MSG_ERRO_CONFIG);
+   free(&MSG_ERRO_ABERTURA_ARQUIVO);
+   free(&MSG_ERRO_MEMORIA);
+   free(&TELA_PRINCIPAL);
+   free(&OPCAO_1);
+   free(&OPCAO_2);
+   free(&OPCAO_3);
+   free(&OPCAO_4);
+   free(&OPCAO_5);
+   free(&OPCAO_6);
+   free(&OPCAO_7);
+   free(&OPCAO_8);
+   free(&OPCAO_9);
+   free(&CONV_TERMINADA);
+   free(&OPCAO_INV);
+   free(&PEDE_OPCAO);
+   free(&NUM_REGS);
+   free(&NUM_BYTES_FIX);
+   free(&NUM_BYTES_DLM);
+   free(&PEDIR_CHAVE_PRIMARIA);
+   free(&REGISTRO_INEXISTENTE);
+   free(&ARQ_CHAVES_CRIADO);
+   free(&ARQ_CHAVES_CLASSIFICADO);
+   free(&ERRO_RA);
+   free(&ERRO_NOME);
+   free(&ERRO_TEL);
+   free(&ERRO_SEXO);
+   free(&ERRO_CURSO);
+   
+   
+} /* LiberaMensagens */
 

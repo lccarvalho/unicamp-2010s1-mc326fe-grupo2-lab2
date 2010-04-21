@@ -43,9 +43,10 @@ Boolean LeConfig(char *sep){
     if (arqConfig == NULL) 
                         return false;     
    
-    fgets(lingua, 5, arqConfig);  //leitura do br no arquivo                        
-    fgets(sep, 5, arqConfig);       //leitura do separador no arquivo                           
-
+    fscanf(arqConfig, "%s", lingua);  //leitura do br no arquivo                        
+    fseek(arqConfig, 2, SEEK_CUR);
+    *sep = fgetc(arqConfig);   //leitura do separador
+    
     fclose(arqConfig); 
    
     Linguagem(lingua);
@@ -185,9 +186,9 @@ void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int num
    numBytesDlm = ftell (dlm);  /* Conta os bytes do arquivo convertido */
    
 
-   fprintf(stdout, "%s %d\n", NUM_REGS, numRegs);
-   fprintf(stdout, "%s %d\n", NUM_BYTES_FIX, numBytesFix);
-   fprintf(stdout, "%s %d\n", NUM_BYTES_DLM, numBytesDlm);
+   fprintf(stdout, "\n%s: %d\n", NUM_REGS, numRegs);
+   fprintf(stdout, "%s: %d\n", NUM_BYTES_FIX, numBytesFix);
+   fprintf(stdout, "%s: %d\n", NUM_BYTES_DLM, numBytesDlm);
    
    free(linha);                 
    fclose(dlm);
