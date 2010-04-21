@@ -32,7 +32,7 @@ void * Malloc(int tamanho){
      ptr = malloc(tamanho);
      
      if(ptr == NULL) {
-            fprintf(stderr, "Erro memória\n"); ///////MODIFICAR//////////////////////////////////////////////////////
+            fprintf(stderr, MSG_ERRO_MEMORIA);
             system("pause");
             exit (0);
      }
