@@ -76,7 +76,7 @@ Record LeRegistroFixo(char* linha, int n, Header* h);
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
    Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
    
-void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos);
+FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos);
 /* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */   
  
 void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head);
@@ -88,12 +88,13 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
 void LiberaRegistro(Record registro, int n);
 /* Libera todas as strings apontadas por record e também os apontadores */
    
-Boolean PesquisaRegistro(char *nomeArqSaida, char* chavePrim, Record *registro);
-/* Procura pela chave primaria 'chavePrim' no arquivo de formato variavel.
+Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, int n);
+/* Procura pela chave primaria 'key' no arquivo de formato variavel
+   separado por sep, com n campos e linha de tamanho máximo max.
    Se encontrar, coloca em 'registro' as informações e retorna true, caso 
    contrário retorna false */
    
-void ImprimeRegistro(Record registro, Header *head, int numcampos);
+void ImprimeRegistro(Record registro, Header* head, int numcampos);
 /* Imprime todos os campos de um registro */
 
 Boolean VerificaRA(char *ra);
