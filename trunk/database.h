@@ -73,10 +73,10 @@ Record LeRegistroFixo(char* linha, int n, Header* h);
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
    Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
    
-void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos, int tamanhofix);
+void ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos);
 /* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */   
  
-void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head, int tamanhofix);
+void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head);
 /* Imprime os dados de um arquivo de campos de tamanho fixo */  
 
 void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
@@ -85,3 +85,22 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
 void LiberaRegistro(Record registro, int n);
 /* Libera todas as strings apontadas por record e também os apontadores */
    
+Boolean PesquisaRegistro(char *nomeArqSaida, char* chavePrim, Record *registro);
+/* Procura pela chave primaria 'chavePrim' no arquivo de formato variavel.
+   Se encontrar, coloca em 'registro' as informações e retorna true, caso 
+   contrário retorna false */
+   
+void ImprimeRegistro(Record registro, Header *head, int numcampos);
+/* Imprime todos os campos de um registro */
+
+Boolean VerificaRA(char *ra);
+/* Verifica se um ra é válido (6 caracteres numéricos) */
+
+void ExtraiChaves(FILE *arqFix, Header *head);
+/* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de dados arqFix,
+   junto com os respectivos endereços dos registros no arquivo */
+   
+void ClassificaChavePrimaria();
+/* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
+   classificando-o */
+
