@@ -48,14 +48,24 @@ int LeOpcao(){
 
 } /* LeOpcao */
 
+#define PEDIR_CHAVE_PRIMARIA "Inform RA to search" //TEMPORARIO**********************************************************************************
+#define REGISTRO_INEXISTENTE "RA not found"
+#define ARQ_CHAVES_CRIADO "Index file created"
+#define ARQ_CHAVES_CLASSIFICADO "Sorted Index file created"
+#define OPCAO_4 "4: Student search by RA\n"
+#define OPCAO_5 "5\n"
+#define OPCAO_6 "6: Create sorted Index file\n"
+#define OPCAO_7 "7\n"
+#define OPCAO_8 "8\n"
 
 void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador,int numcampos){
 /* Menu do programa */
      
      int opcao;
-     char *chavePrim;
+     char chavePrim[6];
      Boolean fim = false;
      Record registro;
+     int tamreg = TamMaxRegistro(head, numcampos);
      FILE *arqChaves;
      
      do {
@@ -83,7 +93,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                      campos de tamanho variavel */
                   
                   fseek(arqFix, 0, SEEK_SET);
-                  ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos);
+                  arqDlm = ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos);
                   printf("\n%s\n\n", CONV_TERMINADA); 
                   
                   system("pause");
@@ -111,20 +121,20 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   printf("%s :", PEDIR_CHAVE_PRIMARIA);
                   scanf("%s", chavePrim);
                   
-                  if(VerificaRA(chavePrim)){
-                     
-                     
-                     if(PesquisaRegistro(nomeArqSaida, chavePrim, &registro)){
-                         ImprimeRegistro(registro, head, numcampos);
-                         LiberaRegistro(registro, numcampos);
-                     }
-                     else
-                         printf("\n%s\n\n", REGISTRO_INEXISTENTE);
-                  }
-                  else
-                      printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
-                         
+/*                if(VerificaRA(chavePrim)){                                  */
                   
+                       if(PesquisaRegistro(nomeArqSaida, chavePrim, registro,
+                                              separador, tamreg, numcampos))  {
+                                          
+                           ImprimeRegistro(registro, head, numcampos);
+/*                         LiberaRegistro(registro, numcampos);               */
+                       }
+                       else
+                           printf("%s", REGISTRO_INEXISTENTE);
+/*                }                                                           */
+//                else
+//                    printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
+                         
                   system("pause");
              break;
              case 5:
@@ -138,7 +148,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              case 6:
                   /* Classificação do arquivo das chaves */
                   
-                  ClassificaChavePrimaria();
+                  ClassificaChavePrimaria();                                      // LUIZ CLAUDIO*******************************
                   printf("\n%s\n\n", ARQ_CHAVES_CLASSIFICADO);
                   
                   system("pause");
