@@ -1,0 +1,29 @@
+Linha de comando deve conter (1)arquivo a ser aberto e (2)criado
+Erro no arquivo config.l1b
+Arquivo de dados nao encontrado ou defeituoso
+Memória insuficiente
+Projeto 2
+1: Criar arquivo delimitado a partir de arquivo de campo fixo
+2: Imprimir os dados a partir de do arquivo de campo fixo
+3: Imprimir os dados a partir de do arquivo de campo delimitado
+4: Pesquisar registro
+5: Extracao das chaves
+6: Classificacao do arquivo das chaves
+7: Listar arquivo com extracao das chaves
+8: Listar arquivo com extracao das chaves classificadas
+9: Encerrar
+Conversao terminada
+Opcao invalida
+Escolha a opcao desejada
+Numero de registros
+Numero de bytes do arquivo original
+Numero de bytes do arquivo convertido
+Entre com a chave primaria
+Registro nao encontrado
+Arquivo de chaves criado
+Arquivo de chaves classificado
+RA invalido
+Nome invalido
+Telefone invalido
+Sexo invalido (F ou M)
+Curso invalido

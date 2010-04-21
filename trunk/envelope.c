@@ -13,7 +13,7 @@ FILE * Fopen(char *arg1, char *arg2){
      f = fopen(arg1, arg2);
      
      if(f == NULL) {
-          fprintf(stderr, MSG_ERRO_ABERTURA_ARQUIVO);
+          fprintf(stderr, "%s\n", MSG_ERRO_ABERTURA_ARQUIVO);
           system("pause");
           exit (0);
      }
@@ -32,7 +32,7 @@ void * Malloc(int tamanho){
      ptr = malloc(tamanho);
      
      if(ptr == NULL) {
-            fprintf(stderr, MSG_ERRO_MEMORIA);
+            fprintf(stderr, "%s\n", MSG_ERRO_MEMORIA);
             system("pause");
             exit (0);
      }

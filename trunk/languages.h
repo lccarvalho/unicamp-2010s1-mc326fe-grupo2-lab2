@@ -13,8 +13,10 @@
  * languages.h - Módulo de configuração da lingua da interface
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
+#include "envelope.h"
 
 
 /* Mensagens de erro em main */
@@ -23,11 +25,6 @@ char * MSG_ERRO_CONFIG;
 char * MSG_ERRO_ABERTURA_ARQUIVO;
 char * MSG_ERRO_ARQ_CFG_BDADOS;
 char * MSG_ERRO_MEMORIA;
-
-
-/* Mensagens de erro na validação de dados de entrada
-   para os códigos previstos em alunos.h */
-char *msg_erro[6];
 
 /* Menu Principal */
 char * TELA_PRINCIPAL;
@@ -41,25 +38,31 @@ char * OPCAO_7;
 char * OPCAO_8;
 char * OPCAO_9;
 
-/* Textos da função Opcoes */
-char * TXT_OUTPUT_1;
-char * TXT_OUTPUT_2;
-char * TXT_OUTPUT_3;
-char * TXT_OUTPUT_4;
-char * TXT_OUTPUT_INV;
+char * OPCAO_INV;
+char * CONV_TERMINADA;
 char * PEDE_OPCAO;
 char * NUM_REGS;
 char * NUM_BYTES_FIX;
 char * NUM_BYTES_DLM;
+char * PEDIR_CHAVE_PRIMARIA;
+char * REGISTRO_INEXISTENTE;
+char * ARQ_CHAVES_CRIADO;
+char * ARQ_CHAVES_CLASSIFICADO;
 
-char * NUM_REGS;
-char * NUM_BYTES_FIX;
-char * NUM_BYTES_DLM;
+/* erros nos registros */
+char * ERRO_RA;
+char * ERRO_NOME;
+char * ERRO_TEL;
+char * ERRO_SEXO;
+char * ERRO_CURSO;
 
 
 
      
 void Linguagem(char *lingua);
 /* Configura as mensagens de tela do programa conforme a lingua em uso, 
-   identificada no arquivo config.l1b
-*/        
+   identificada no arquivo config.l1b */        
+
+void LiberaMensagens();
+/* Libera o espaço alocado para as mensagens */
+

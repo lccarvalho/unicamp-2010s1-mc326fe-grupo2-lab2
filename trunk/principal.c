@@ -37,10 +37,11 @@ int LeOpcao(){
 /* Le a opcao digitada e a retorna como um 'int' */
 
     char opcao[5];
+    printf("\n%s: ", PEDE_OPCAO);
     scanf("%s", opcao);
     
     while(!VerificaDigitos(opcao)) {
-       printf("%s", TXT_OUTPUT_INV); 
+       printf("%s", OPCAO_INV); 
        scanf("%s", opcao);
     }
     
@@ -48,15 +49,6 @@ int LeOpcao(){
 
 } /* LeOpcao */
 
-#define PEDIR_CHAVE_PRIMARIA "" //TEMPORARIO**********************************************************************************
-#define REGISTRO_INEXISTENTE ""
-#define ARQ_CHAVES_CRIADO ""
-#define ARQ_CHAVES_CLASSIFICADO ""
-#define OPCAO_4 "4\n"
-#define OPCAO_5 "5\n"
-#define OPCAO_6 "6\n"
-#define OPCAO_7 "7\n"
-#define OPCAO_8 "8\n"
 
 void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char separador,int numcampos){
 /* Menu do programa */
@@ -68,20 +60,20 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
      
      do {
          system("cls");
-         printf("%s", TELA_PRINCIPAL);
-         printf("%s", OPCAO_1);
-         printf("%s", OPCAO_2);
-         printf("%s", OPCAO_3);
-         printf("%s", OPCAO_4);
-         printf("%s", OPCAO_5);
-         printf("%s", OPCAO_6);
-         printf("%s", OPCAO_7);
-         printf("%s", OPCAO_8);
-         printf("%s", OPCAO_9);
+         printf("%s\n\n", TELA_PRINCIPAL);
+         printf("%s\n", OPCAO_1);
+         printf("%s\n", OPCAO_2);
+         printf("%s\n", OPCAO_3);
+         printf("%s\n", OPCAO_4);
+         printf("%s\n", OPCAO_5);
+         printf("%s\n", OPCAO_6);
+         printf("%s\n", OPCAO_7);
+         printf("%s\n", OPCAO_8);
+         printf("%s\n", OPCAO_9);
          
          opcao = LeOpcao();
          while(opcao <= 0 || opcao > 9){   /* Verifica se é uma opção válida */
-             printf("%s", TXT_OUTPUT_INV);
+             printf("%s", OPCAO_INV);
              opcao = LeOpcao();
          }
          
@@ -92,7 +84,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   fseek(arqFix, 0, SEEK_SET);
                   ConverteFixoDelim(nomeArqSaida, arqFix, separador, head, numcampos);
-                  printf("%s", TXT_OUTPUT_1); 
+                  printf("\n%s\n\n", CONV_TERMINADA); 
                   
                   system("pause");
              break;
@@ -126,10 +118,10 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                          LiberaRegistro(registro, numcampos);
                      }
                      else
-                         printf("%s", REGISTRO_INEXISTENTE);
+                         printf("\n%s\n\n", REGISTRO_INEXISTENTE);
                   }
                   else
-                      printf("%s", msg_erro[2]);   /* RA Invalido */
+                      printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
                          
                   
                   system("pause");
@@ -138,7 +130,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Extração das chaves primárias */
                   
                   ExtraiChaves(arqFix, head);
-                  printf("%s", ARQ_CHAVES_CRIADO);
+                  printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
                   
                   system("pause");
              break;
@@ -146,7 +138,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Classificação do arquivo das chaves */
                   
                   ClassificaChavePrimaria();
-                  printf("%s", ARQ_CHAVES_CLASSIFICADO);
+                  printf("\n%s\n\n", ARQ_CHAVES_CLASSIFICADO);
                   
                   system("pause");
              break;
@@ -197,6 +189,7 @@ int main(int argc, char *argv[]) {
     
     Menu(head, arqFix, arqDlm, argv[2], separador, numcampos);
 
+    LiberaMensagens();
     fclose(arqFix);
     free(head);
     

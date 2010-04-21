@@ -1,0 +1,29 @@
+Command line should contain (1)file to be opened and (2)created
+Error in file config.l1b
+Data file not found or corrupted
+Insufficient memory
+Project 2
+1: Create delimited data file from fixed length field data file
+2: Print data from fixed length field data file
+3: Print data from delimited data file
+4: Search register
+5: Extract keys
+6: Sort keys
+7: Print data from extracted keys file
+8: Print data from sorted keys file
+9: Quit
+File conversion success
+Invalid option
+Select an option
+Number of registers
+Number of bytes of original file
+Number of bytes of converted file
+Enter the primary key
+Register not found
+Keys file created
+Keys file sorted
+Invalid RA
+Invalid name
+Invalid phone number
+Invalid sex
+Invalid course
