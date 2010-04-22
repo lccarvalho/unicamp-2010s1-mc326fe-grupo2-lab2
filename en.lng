@@ -6,11 +6,11 @@ Project 2
 1: Create delimited data file from fixed length field data file
 2: Print data from fixed length field data file
 3: Print data from delimited data file
-4: Search register
-5: Extract keys
-6: Sort keys
-7: Print data from extracted keys file
-8: Print data from sorted keys file
+4: Student search by RA
+5: Create index file
+6: Create sorted index file
+7: Print index file
+8: Print sorted index file
 9: Quit
 File conversion success
 Invalid option
@@ -18,10 +18,10 @@ Select an option
 Number of registers
 Number of bytes of original file
 Number of bytes of converted file
-Enter the primary key
+Inform RA to search
 Register not found
-Keys file created
-Keys file sorted
+Index file created
+Sorted index file created
 Invalid RA
 Invalid name
 Invalid phone number
