@@ -88,7 +88,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
 void LiberaRegistro(Record registro, int n);
 /* Libera todas as strings apontadas por record e também os apontadores */
    
-Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, int n);
+Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n);
 /* Procura pela chave primaria 'key' no arquivo de formato variavel
    separado por sep, com n campos e linha de tamanho máximo max.
    Se encontrar, coloca em 'registro' as informações e retorna true, caso 

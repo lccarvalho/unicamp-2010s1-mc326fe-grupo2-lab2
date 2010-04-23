@@ -159,14 +159,16 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    
    for(i=0;i<n;i++){
                     
-   registro[i] = (char*)malloc(sizeof(char)*(h[i].tamanho+1));
-   strncpy(registro[i], &linha[h[i].inicio-1], h[i].tamanho);
-   registro[i][h[i].tamanho] = '\0';              
-   TiraBrancosDoFinal(registro[i]);
+      registro[i] = (char*)malloc(sizeof(char)*(h[i].tamanho+1));
+      strncpy(registro[i], &linha[h[i].inicio-1], h[i].tamanho);
+      registro[i][h[i].tamanho] = '\0';              
+      TiraBrancosDoFinal(registro[i]);
+   
    }
    
+   
    return registro;
-}
+}/* LeRegistroFixo */
    
 
 FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos){
@@ -316,7 +318,7 @@ void LiberaRegistro(Record registro, int n){
 } /* LiberaRegistro */
 
 
-Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, int n){
+Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n){
 /* Procura pela chave primaria 'key' no arquivo de formato variavel
    separado por sep, com n campos e linha de tamanho máximo max.
    Se encontrar, coloca em 'registro' as informações e retorna true, caso 
@@ -325,14 +327,10 @@ Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, in
    FILE* f = Fopen(arq, "rt");
    char* linha = malloc(sizeof(char)*max);
    int i = 0;
-  
-   rec = malloc(sizeof(char*)*n);
-//  rewind(dlm);
-  
+   Record rec = malloc(sizeof(char*)*n);
 
    while(!feof(f)) {
                     fgets(linha, max, f);
-                      
                     rec[0] = strtok(linha,&sep);
 
                     if (strcmp(rec[0],key) == 0) {     //achou a chave
@@ -340,15 +338,11 @@ Boolean PesquisaRegistro(char* arq, char* key, Record rec, char sep, int max, in
                              i++;
                              rec[i] = strtok (NULL, &sep);
                        }
-/*teste*/
-                     for(i=0; i<n-1; i++) 
-                              printf("  %d) %s\n", (i+1), rec[i]);
-/*fim teste*/                                                 
-                     return true;
+                     return rec;
     
                     }
    }
-   return false;  
+   return NULL;  
 
 } /* PesquisaRegistro */
 
