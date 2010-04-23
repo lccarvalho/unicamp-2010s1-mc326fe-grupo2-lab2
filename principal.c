@@ -114,14 +114,20 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
 /*                if(VerificaRA(chavePrim)){                                  */
                   
-                       if(PesquisaRegistro(nomeArqSaida, chavePrim, registro,
-                                              separador, tamreg, numcampos))  {
-                                          
-                           //ImprimeRegistro(registro, head, numcampos);
-/*                         LiberaRegistro(registro, numcampos);               */
-                       }
-                       else
-                           printf("%s", REGISTRO_INEXISTENTE);
+                     registro = PesquisaRegistro(nomeArqSaida, chavePrim, 
+                                              separador, tamreg, numcampos);  
+/*teste*/
+                     int i;                         
+                     for(i=0; i<numcampos-1; i++) 
+                            printf("  %d) %s\n", (i+1), registro[i]);
+/*fim teste*/                                                 
+system("pause");                                          
+
+                           ImprimeRegistro(registro, head, numcampos);
+                           LiberaRegistro(registro, numcampos);               
+//                       }
+  //                     else
+    //                       printf("%s\n", REGISTRO_INEXISTENTE);
 /*                }                                                           */
 //                else
 //                    printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
