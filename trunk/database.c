@@ -372,10 +372,13 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de
    dados arqFix, junto com os respectivos endereços dos registros no arquivo */
    separador = '#';
+   FILE* ind;
    int i, tamra;
    char g;
    char *ra;
    long pos;
+   
+     ind = Fopen("chaves.ind", "w");
                   
      tamra = head[0].tamanho;
      ra = malloc(sizeof(char)*(tamra));
@@ -393,7 +396,7 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
         g=fgetc(arqDlm);
         pos=ftell(arqDlm);  
         fread(ra, tamra, 1, arqDlm);   
-        printf("%ld-",pos);
+        fprintf(ind, "%s %ld\n", ra, pos);
                           
      }
               
@@ -403,7 +406,7 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
                     
      }
            
-                   
+    fclose(ind);               
 
    /* arquivo tem o formato
       
