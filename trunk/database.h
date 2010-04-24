@@ -100,7 +100,7 @@ void ImprimeRegistro(Record registro, Header* head, int numcampos);
 Boolean VerificaRA(char *ra);
 /* Verifica se um ra é válido (6 caracteres numéricos) */
 
-void ExtraiChaves(FILE *arqFix, Header *head);
+void ExtraiChaves(FILE *arqDlm, char separador, Header* head);
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de dados arqFix,
    junto com os respectivos endereços dos registros no arquivo */
    

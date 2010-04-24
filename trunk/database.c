@@ -263,6 +263,7 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
      f=fgetc(arqDel);                  
                 
      while(!feof(arqDel)) {
+                          
                                        
 
         /* imprime o nome do campo e seu respectivo valor */
@@ -367,9 +368,42 @@ Boolean VerificaRA(char *ra){
 }
 
 
-void ExtraiChaves(FILE *arqFix, Header *head){
+void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de
    dados arqFix, junto com os respectivos endereços dos registros no arquivo */
+   separador = '#';
+   int i, tamra;
+   char g;
+   char *ra;
+   long pos;
+                  
+     tamra = head[0].tamanho;
+     ra = malloc(sizeof(char)*(tamra));
+     rewind(arqDlm);
+
+     fread(ra, tamra, 1, arqDlm);     
+         
+                
+     while(!feof(arqDlm)) {
+
+       
+
+     if(g==separador){
+
+        g=fgetc(arqDlm);
+        pos=ftell(arqDlm);  
+        fread(ra, tamra, 1, arqDlm);   
+        printf("%ld-",pos);
+                          
+     }
+              
+              
+              
+        g=fgetc(arqDlm);
+                    
+     }
+           
+                   
 
    /* arquivo tem o formato
       
