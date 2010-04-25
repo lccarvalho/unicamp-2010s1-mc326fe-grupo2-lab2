@@ -21,6 +21,7 @@
 
 
 /* Funções Auxiliares (não incluídas em database.h) ***************************/
+
 void TiraBrancosDoFinal(char* s){
 /* Elimina todos os brancos em excesso no final de uma string. */
     
@@ -40,14 +41,86 @@ int TamMaxRegistro(Header* h, int campos){
    tam += campos;                            //para caber os delimitadores
    return tam;
    
-} /*TamMaxRegistro*/
+} /* TamMaxRegistro */
 
 
+Boolean SoZeros(char *string) {
+/* Função auxiliar: Retorna "true" se a string só contém zeros ou
+   "false" caso contrário. */
+   
+   char *s1, s2[10] = "123456789";
+   s1 = strpbrk(string, s2);
+   
+   if(s1 == NULL)
+      return true;
+   
+   return false;
+    
+} /* SoZeros */
 
 
+Boolean ValidaDados(Record reg, Header *h, int numcampos) {
+/* Retorna 'true' se os dados de um registro forem válidos ou 'false'
+   caso contrário */
+        
+     int i;
+     
+     /* Verifica se não falta nenhum dado obrigatorio */
+     for(i = 0; i < numcampos; i++)
+        if(reg[i][0] == '\0' && h[i].obrig == true) {
+            printf("%s\n\n", ERRO_DADOS_OBRIG);
+            return false;
+        }
+     
+     /* Verifica RA */
+     if(!VerificaStringNumericaNaoNula(reg[0], 6)) {
+        printf("%s: %s\n\n", ERRO_RA, reg[0]);
+        return false;
+     }
+     
+     /* Verifica telefone contato */
+     if(!VerificaStringNumericaNaoNula(reg[3], 8)) {
+        printf("%s: %s\n\n", ERRO_TEL, reg[3]);
+        return false;
+     }
+     
+     /* Verifica telefone alternativo */
+     if(reg[4][0] != '\0' && !VerificaStringNumericaNaoNula(reg[4], 8)) {
+        printf("%s: %s\n\n", ERRO_TEL, reg[4]);
+        return false;
+     }
+     
+     /* Verifica sexo */
+     if(reg[5][0] != '\0' && reg[5][0] != 'M' && reg[5][0] != 'F') {
+        printf("%s: %s\n\n", ERRO_SEXO, reg[5]);
+        return false;
+     }
+     
+     /* Verifica curso */
+     if(!VerificaStringNumericaNaoNula(reg[6], 2)) {
+        printf("%s: %s\n\n", ERRO_CURSO, reg[6]);
+        return false;
+     }
+     
+     return true;
+     
+} /* ValidaDados */
 
 /*************************** Funções Auxiliares (não incluídas em database.h) */
 
+
+Boolean VerificaStringNumericaNaoNula(char *string, int nDig){
+/* Verifica se string só contém números, se os números não são todos 0 e
+   se string tem nDig. */
+
+    int i, tam = strlen(string);
+    
+    if(tam != nDig || SoZeros(string) || !VerificaDigitos(string))
+       return false;
+    
+    return true;
+    
+} /* VerificaStringNumericaNaoNula */
 
 
 Boolean VerificaDigitos(char *string) {
@@ -149,7 +222,7 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de arqFix. Carrega Record com os endereços do 
    conteúdo de cada campo. Deixa o ponteiro de arqFix na posição apropriada
-   para a próxima leitura */
+   para a próxima leitura. Retorna NULL se houver algum erro no registro. */
    
    
    int i;
@@ -166,17 +239,22 @@ Record LeRegistroFixo(char* linha, int n, Header* h) {
    
    }
    
-   
+   if(!ValidaDados(registro, h, n)) {
+       LiberaRegistro(registro, n);
+       return NULL;
+   }
+       
    return registro;
+   
 }/* LeRegistroFixo */
    
 
 FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos){
-/* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */
-   
+/* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel.
+   Despreza registros invalidos */      
 
    FILE* dlm;
-   int i, numRegs = 0, numBytesFix, numBytesDlm, tamanhofix;
+   int i, numRegs = 0, numBytesFix, numBytesDlm, tamanhofix, regInv = 0;
    char *linha;
    char fimReg;
    Record registro;
@@ -198,19 +276,24 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int nu
        
        registro = LeRegistroFixo(linha, numcampos, head);
        
-       for(i=0; i<numcampos-1; i++)
-           fprintf(dlm, "%s|", registro[i]);     
+       if(registro != NULL) {
        
-       fprintf(dlm, "%s\n", registro[i]);
+           for(i=0; i<numcampos-1; i++)
+               fprintf(dlm, "%s%c", registro[i], sep);     
+       
+           fprintf(dlm, "%s\n", registro[i]);
    
-       LiberaRegistro(registro, numcampos);
+           LiberaRegistro(registro, numcampos);
+        }
+        else
+            regInv++;
    }
    
    numBytesFix = ftell (arqFix); /* Conta os bytes do arquivo original */
    numBytesDlm = ftell (dlm);  /* Conta os bytes do arquivo convertido */
    
-
    fprintf(stdout, "\n%s: %d\n", NUM_REGS, numRegs);
+   fprintf(stdout, "%d %s\n", regInv, NUM_REG_INV);
    fprintf(stdout, "%s: %d\n", NUM_BYTES_FIX, numBytesFix);
    fprintf(stdout, "%s: %d\n", NUM_BYTES_DLM, numBytesDlm);
    
@@ -222,9 +305,10 @@ FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int nu
    
       
 void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head){
-/* Imprime os dados de um arquivo de campos de tamanho fixo */
+/* Imprime os dados de um arquivo de campos de tamanho fixo. Nao imprime
+   registros invalidos */
 
-     int i, tamanhofix;
+     int i, tamanhofix, regInv = 0;
      char *linha;
      Record registro;
      printf("\n");
@@ -239,10 +323,15 @@ void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head){
                       
         registro = LeRegistroFixo(linha, numcampos, head); /*transforma em um registro */
                       
-        ImprimeRegistro(registro, head, numcampos); /* imprime */
-            
-        LiberaRegistro(registro, numcampos);
+        if(registro != NULL) {
+            ImprimeRegistro(registro, head, numcampos); /* imprime */
+            LiberaRegistro(registro, numcampos);
+        }
+        else
+            regInv++;
      }
+     
+     printf("%d %s\n\n", regInv, NUM_REG_INV);
                    
      free(linha);
                    
@@ -361,16 +450,10 @@ void ImprimeRegistro(Record registro, Header *head, int numcampos){
 } /* ImprimeRegistro */
 
 
-Boolean VerificaRA(char *ra){
-/* Verifica se um ra é válido (6 caracteres numéricos) */
-
-    return true;
-}
-
-
 void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de
-   dados arqFix, junto com os respectivos endereços dos registros no arquivo */
+   dados arqDlm, junto com os respectivos endereços dos registros no arquivo */
+   
    separador = '#';
    FILE* ind;
    int i, tamra;
@@ -406,15 +489,7 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
                     
      }
            
-    fclose(ind);               
-
-   /* arquivo tem o formato
-      
-      ****** #
-      ****** #
-      ****** #
-     
-      onde ****** é o ra e # o endereço */
+    fclose(ind);
 
 }/* ExtraiChaves */
 
@@ -422,6 +497,7 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
 void ClassificaChavePrimaria(){
 /* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
    classificando-o */
+   
    system("sort chaves.ind /o chavesClas.ind");
 
 } /* ClassificaChavePrimaria */
@@ -434,6 +510,8 @@ void ImprimeChaves(FILE *arq){
    
    while(!feof(arq)){ 
       fscanf(arq, "%s", leArq);
+      if(feof(arq))
+         break;
       printf("\n%s: %s\n", CHAVE_PRIM, leArq);
       fscanf(arq, "%s", leArq);
       printf("%s: %s\n", ENDERECO, leArq);

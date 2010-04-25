@@ -52,6 +52,8 @@ char * ERRO_NOME;
 char * ERRO_TEL;
 char * ERRO_SEXO;
 char * ERRO_CURSO;
+char * NUM_REG_INV;
+char * ERRO_DADOS_OBRIG;
 
 
 
