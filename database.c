@@ -465,17 +465,19 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
    separador = '#';
    FILE* ind;
    int i, tamra;
-   char g;
+   char g, f;
    char *ra;
    long pos;
+   Boolean pri = false;
    
      ind = Fopen("chaves.ind", "w");
                   
      tamra = head[0].tamanho;
-     ra = malloc(sizeof(char)*(tamra));
+     ra = malloc(sizeof(char)*(tamra-1));
      rewind(arqDlm);
 
-     fread(ra, tamra, 1, arqDlm);     
+     f=fgetc(arqDlm);
+     fread(ra, tamra-1, 1, arqDlm);     
          
                 
      while(!feof(arqDlm)) {
@@ -485,10 +487,16 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
      if(g==separador){
 
         g=fgetc(arqDlm);
-        pos=ftell(arqDlm);  
-        fread(ra, tamra, 1, arqDlm);   
-        fprintf(ind, "%s %ld\n", ra, pos);
+        f=fgetc(arqDlm);
+        if(!feof(arqDlm)){     
+             pos=ftell(arqDlm);  
+             fread(ra, tamra-1, 1, arqDlm);   
+             fprintf(ind, "%c%s %ld\n",f, ra, pos);
+        }
                           
+     }else if(pri == false){
+        pri=true;
+        fprintf(ind, "%c%s 0\n",f, ra);       
      }
               
               
@@ -498,6 +506,7 @@ void ExtraiChaves(FILE *arqDlm, char separador, Header* head){
      }
            
     fclose(ind);
+    free(ra);
 
 }/* ExtraiChaves */
 
