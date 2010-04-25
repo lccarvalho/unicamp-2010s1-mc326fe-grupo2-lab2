@@ -54,6 +54,10 @@ typedef struct {
 
 /*** Funções ******************************************************************/
 
+Boolean VerificaStringNumericaNaoNula(char *string, int nDig);
+/* Verifica se string só contém números, se os números não são todos 0 e
+   se string tem nDig. */
+
 Boolean VerificaDigitos(char *string);
 /* Retorna "true" se a string só contém digitos de 0-9
    ou retorna "false" caso contrário */
@@ -74,13 +78,16 @@ Record LeRegistroFixo(char* linha, int n, Header* h);
 /* Aloca a memória dinâmica necessária e carrega na mesma o conteúdo dos n 
    campos do registro corrente de um arquivo de dados em formato de campo fixo
    (arq). Carrega Record com os endereços do conteúdo de cada campo. 
-   Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura */
+   Deixa o ponteiro de arqFix na posição apropriada para a próxima leitura.
+   Retorna NULL se houver algum erro no registro. */
    
 FILE* ConverteFixoDelim(char* nome, FILE* arqFix, char sep, Header* head, int numcampos);
-/* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel */   
+/* Converte um arquivo de campos de tamanho fixo em outro de campos de tamanho variavel.
+   Despreza registros invalidos */   
  
 void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head);
-/* Imprime os dados de um arquivo de campos de tamanho fixo */  
+/* Imprime os dados de um arquivo de campos de tamanho fixo. Nao imprime
+   registros invalidos */
 
 void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c);
 /* Imprime os dados de um arquivo de campos de tamanho variavel */   
@@ -97,11 +104,8 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n);
 void ImprimeRegistro(Record registro, Header* head, int numcampos);
 /* Imprime todos os campos de um registro */
 
-Boolean VerificaRA(char *ra);
-/* Verifica se um ra é válido (6 caracteres numéricos) */
-
 void ExtraiChaves(FILE *arqDlm, char separador, Header* head);
-/* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de dados arqFix,
+/* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de dados arqDlm,
    junto com os respectivos endereços dos registros no arquivo */
    
 void ClassificaChavePrimaria();

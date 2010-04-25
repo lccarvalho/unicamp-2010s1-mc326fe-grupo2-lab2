@@ -109,23 +109,24 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              case 4:
                   /* pesquisa um registro pela chave primária */
                   
-                  printf("%s: ", PEDIR_CHAVE_PRIMARIA);
+                  printf("\n%s: ", PEDIR_CHAVE_PRIMARIA);
                   scanf("%s", chavePrim);
                   
-//                if(VerificaRA(chavePrim)){                                  
+                  if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
                      registro = PesquisaRegistro(nomeArqSaida, chavePrim, 
                                               separador, tamreg, numcampos);  
-                     if(registro != NULL) {                         
+                     if(registro != NULL) {
 
-                                 ImprimeRegistro(registro, head, numcampos);
-                                 LiberaRegistro(registro, numcampos);               
+                          printf("\n");
+                          ImprimeRegistro(registro, head, numcampos);
+                          LiberaRegistro(registro, numcampos);
                      }
                      else
-                       printf("%s\n", REGISTRO_INEXISTENTE);
-//                }                                                           */
-//                else
-//                    printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
+                          printf("\n%s\n\n", REGISTRO_INEXISTENTE);
+                  }
+                 else
+                     printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
                          
                   system("pause");
              break;
@@ -142,7 +143,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              case 6:
                   /* Classificação do arquivo das chaves */
                   
-                  ClassificaChavePrimaria();                                      // LUIZ CLAUDIO*******************************
+                  ClassificaChavePrimaria();
                   printf("\n%s\n\n", ARQ_CHAVES_CLASSIFICADO);
                   
                   system("pause");
@@ -160,7 +161,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              break;
              case 8:
                   /* Listar o arquivo com a extração das chaves classificadas
-                     geradas na opção 6*/
+                     geradas na opção 6 */
                   
                   arqChaves = Fopen("chavesClas.ind", "r");
                   
