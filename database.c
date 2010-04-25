@@ -424,11 +424,19 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n){
                     rec[0] = strtok(linha,&sep);
 
                     if (strcmp(rec[0],key) == 0) {     //achou a chave
-                       while (rec[i] != NULL){
-                             i++;
-                             rec[i] = strtok (NULL, &sep);
+
+                       for(i=0;i<n-1;i++){
+                             //se próximo campo é vazio             
+                             if(*(rec[i]+strlen(rec[i])+1)==sep){
+                                     *(rec[i]+strlen(rec[i])+1) = '\0';
+                                     i++;
+                                     rec[i] = (rec[i-1]+strlen(rec[i-1])+1);
+                             }
+
+                             rec[i+1] = strtok (rec[i]+strlen(rec[i])+1, &sep);
+
                        }
-                     return rec;
+                    return rec;
     
                     }
    }
