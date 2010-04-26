@@ -436,7 +436,7 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n){
                              rec[i+1] = strtok (rec[i]+strlen(rec[i])+1, &sep);
 
                        }
-                    return rec;
+                       return rec;
     
                     }
    }
@@ -458,60 +458,32 @@ void ImprimeRegistro(Record registro, Header *head, int numcampos){
 } /* ImprimeRegistro */
 
 
-void ExtraiChaves(FILE *arqDlm, int numcampos, Header* head){
+
+void ExtraiChaves(FILE *arqDlm, char* sep, Header* head){
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de
    dados arqDlm, junto com os respectivos endereços dos registros no arquivo */
    
-   
-   
-   char separador;
    FILE* ind;
-   int i, tamra;
-   char g, f;
-   char *ra;
-   long pos;
-   Boolean pri = false;
-     
-     separador=head[numcampos-1].msg[0];
+   char linha[400];            //melhor seria passar tamreg como argumento e declarar com este tamanho
+   char *key;
+   long endereco;
    
-     ind = Fopen("chaves.ind", "w");                    //cria e abre o arquivo chaves.ind
+   ind = Fopen("chaves.ind", "w");
                   
-     tamra = head[0].tamanho;                          //aloca posicao na memoria para a chave primaria        
-     ra = malloc(sizeof(char)*(tamra-1));
-     rewind(arqDlm);
-
-     f=fgetc(arqDlm);                                  //pega o primeiro caracter da chave primaria e grava o resto da chave em ra
-     fread(ra, tamra-1, 1, arqDlm);     
-         
-                
-     while(!feof(arqDlm)) {                            //percorre ate o arquivo ser vazio
-
-       
-
-     if(g==separador){                                 //se achou um final de registro grava a posicao com o respecrivo ra o arquivo
-
-        g=fgetc(arqDlm);
-        f=fgetc(arqDlm);
-        if(!feof(arqDlm)){     
-             pos=ftell(arqDlm);  
-             fread(ra, tamra-1, 1, arqDlm);   
-             fprintf(ind, "%c%s %ld\n",f, ra, pos);
+   key = malloc(sizeof(char)*head[0].tamanho);
+   rewind(arqDlm);
+ 
+   while(!feof(arqDlm)) {
+        endereco = ftell(arqDlm);  
+        fgets(linha, 400, arqDlm);
+        if(!feof(arqDlm)) {
+                          key = strtok(linha,sep);
+                          fprintf(ind, "%s %ld\n", key, endereco);
         }
-                          
-     }else if(pri == false){                           //grava o primeiro indice
-        pri=true;
-        fprintf(ind, "%c%s 0\n",f, ra);       
-     }
-              
-              
-              
-        g=fgetc(arqDlm);                               //avanca um caracter
-                    
-     }
-           
-    fclose(ind);
-    free(ra);                                         //libera o ra e fecha o arquivo
-
+   }
+   free(key); 
+   fclose(ind);
+ 
 }/* ExtraiChaves */
 
 
