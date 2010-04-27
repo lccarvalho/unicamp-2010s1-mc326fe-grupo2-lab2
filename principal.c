@@ -71,9 +71,14 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          printf("%s\n", OPCAO_7);
          printf("%s\n", OPCAO_8);
          printf("%s\n", OPCAO_9);
+         printf("%s\n", OPCAO_10);
+         printf("%s\n", OPCAO_11);
+         printf("%s\n", OPCAO_12);
+         
+         
          
          opcao = LeOpcao();
-         while(opcao <= 0 || opcao > 9){   /* Verifica se é uma opção válida */
+         while(opcao <= 0 || opcao > 12){   /* Verifica se é uma opção válida */
              printf("%s", OPCAO_INV);
              opcao = LeOpcao();
          }
@@ -125,7 +130,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                      else
                           printf("\n%s\n\n", REGISTRO_INEXISTENTE);
                   }
-                 else
+                  else
                      printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
                          
                   system("pause");
@@ -172,6 +177,62 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   system("pause");
              break;
              case 9:
+                  /* Criação do arquivo de índices */
+                  
+                  arqDlm = Fopen(nomeArqSaida, "r");
+                  ExtraiChaves(arqDlm, &separador, head);
+                  fclose(arqDlm);
+                  printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
+                  
+                  system("pause");
+             break;
+             case 10:
+                  /* Pesquisa utilizando o arquivo de indices */
+                  
+                  printf("\n%s: ", PEDIR_CHAVE_PRIMARIA);
+                  scanf("%s", chavePrim);
+                  
+                  if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
+                  
+                     registro = PesqIndexRegistro();  //CHAMADA PROVISORIA
+                     if(registro != NULL) {
+
+                          printf("\n");
+                          ImprimeRegistro(registro, head, numcampos);
+                          LiberaRegistro(registro, numcampos);
+                     }
+                     else
+                          printf("\n%s\n\n", REGISTRO_INEXISTENTE);
+                  }
+                  else
+                     printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
+                         
+                  system("pause");
+             break;
+             case 11:
+                  /* Remocao de um registro */
+                  
+                  printf("\n%s: ", PEDIR_REG_A_REMOVER);
+                  scanf("%s", chavePrim);
+                  
+                  if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
+                  
+                     registro = PesqIndexRegistro();  //CHAMADA PROVISORIA
+                     if(registro != NULL) {
+
+                          printf("\n");
+                          RemoveRegistro();           //CHAMADA PROVISORIA
+                          LiberaRegistro(registro, numcampos);
+                     }
+                     else
+                          printf("\n%s\n\n", REGISTRO_INEXISTENTE);
+                  }
+                  else
+                     printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
+                         
+                  system("pause");
+             break;
+             case 12:
                   fim = true;
              break;
          }

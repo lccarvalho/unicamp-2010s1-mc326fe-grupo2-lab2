@@ -3,15 +3,18 @@ Erro no arquivo config.l1b
 Arquivo de dados nao encontrado ou defeituoso
 Memória insuficiente
 Projeto 2
-1: Criar arquivo delimitado a partir de arquivo de campo fixo
-2: Imprimir os dados a partir de do arquivo de campo fixo
-3: Imprimir os dados a partir de do arquivo de campo delimitado
-4: Pesquisar registro pelo RA
-5: Extracao das chaves
-6: Classificar arquivo de indices
-7: Listar arquivo de indices
-8: Listar arquivo de indices classificado
-9: Encerrar
+ 1: Criar arquivo delimitado a partir de arquivo de campo fixo
+ 2: Imprimir os dados a partir de do arquivo de campo fixo
+ 3: Imprimir os dados a partir de do arquivo de campo delimitado
+ 4: Pesquisar registro pelo RA
+ 5: Extracao das chaves
+ 6: Classificar arquivo de indices
+ 7: Listar arquivo de indices
+ 8: Listar arquivo de indices classificado
+ 9: Criar o arquivo de indices
+10: Pesquisar utilizando o arquivo de indices
+11: Remover registro
+12: Encerrar
 Conversao terminada
 Opcao invalida
 Escolha a opcao desejada
@@ -19,6 +22,7 @@ Numero de registros
 Numero de bytes do arquivo original
 Numero de bytes do arquivo convertido
 Entre com o RA
+RA do aluno a ser removido
 Registro nao encontrado
 Arquivo de indices criado
 Arquivo de indices classificado

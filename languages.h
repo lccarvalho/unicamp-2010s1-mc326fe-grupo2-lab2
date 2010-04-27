@@ -32,6 +32,9 @@ char * OPCAO_6;
 char * OPCAO_7;
 char * OPCAO_8;
 char * OPCAO_9;
+char * OPCAO_10;
+char * OPCAO_11;
+char * OPCAO_12;
 
 char * OPCAO_INV;
 char * CONV_TERMINADA;
@@ -40,6 +43,7 @@ char * NUM_REGS;
 char * NUM_BYTES_FIX;
 char * NUM_BYTES_DLM;
 char * PEDIR_CHAVE_PRIMARIA;
+char * PEDIR_REG_A_REMOVER;
 char * REGISTRO_INEXISTENTE;
 char * ARQ_CHAVES_CRIADO;
 char * ARQ_CHAVES_CLASSIFICADO;

@@ -512,3 +512,18 @@ void ImprimeChaves(FILE *arq){
    printf("\n");
    
 } /* ImprimeChaves */
+
+/*******************************NOVAS FUNÇÕES DO LAB2C*************************/
+Record PesqIndexRegistro(){
+/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
+
+   Record rec;
+   return rec;
+   
+} /* PesqIndexRegistro */
+
+
+void RemoveRegistro(){
+/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
+
+}
