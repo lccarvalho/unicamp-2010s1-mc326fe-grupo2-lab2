@@ -114,3 +114,11 @@ void ClassificaChavePrimaria();
 
 void ImprimeChaves(FILE *arq);
 /* Imprime as chaves primarias e o endereço */
+
+
+/*******************************NOVAS FUNÇÕES DO LAB2C*************************/
+Record PesqIndexRegistro();
+/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
+
+void RemoveRegistro();
+/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/

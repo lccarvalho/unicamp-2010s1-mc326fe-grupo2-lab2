@@ -51,6 +51,9 @@ void Linguagem(char *lingua){
    LeMensagem(lang, &OPCAO_7);
    LeMensagem(lang, &OPCAO_8);
    LeMensagem(lang, &OPCAO_9);
+   LeMensagem(lang, &OPCAO_10);
+   LeMensagem(lang, &OPCAO_11);
+   LeMensagem(lang, &OPCAO_12);
    LeMensagem(lang, &CONV_TERMINADA);
    LeMensagem(lang, &OPCAO_INV);
    LeMensagem(lang, &PEDE_OPCAO);
@@ -58,6 +61,7 @@ void Linguagem(char *lingua){
    LeMensagem(lang, &NUM_BYTES_FIX);
    LeMensagem(lang, &NUM_BYTES_DLM);
    LeMensagem(lang, &PEDIR_CHAVE_PRIMARIA);
+   LeMensagem(lang, &PEDIR_REG_A_REMOVER);   
    LeMensagem(lang, &REGISTRO_INEXISTENTE);
    LeMensagem(lang, &ARQ_CHAVES_CRIADO);
    LeMensagem(lang, &ARQ_CHAVES_CLASSIFICADO);

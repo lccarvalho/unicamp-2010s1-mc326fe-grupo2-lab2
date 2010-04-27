@@ -3,15 +3,18 @@ Error in file config.l1b
 Data file not found or corrupted
 Insufficient memory
 Project 2
-1: Create delimited data file from fixed length field data file
-2: Print data from fixed length field data file
-3: Print data from delimited data file
-4: Student search by RA
-5: Create index file
-6: Create sorted index file
-7: Print index file
-8: Print sorted index file
-9: Quit
+ 1: Create delimited data file from fixed length field data file
+ 2: Print data from fixed length field data file
+ 3: Print data from delimited data file
+ 4: Student search by RA
+ 5: Extract index keys
+ 6: Sort index file
+ 7: Print index file
+ 8: Print sorted index file
+ 9: Create index file
+10: Student search using index file
+11: Delete record
+12: Quit
 File conversion success
 Invalid option
 Select an option
@@ -19,6 +22,7 @@ Number of registers
 Number of bytes of original file
 Number of bytes of converted file
 Inform RA to search
+Inform RA of student to be removed
 Register not found
 Index file created
 Sorted index file created
