@@ -106,7 +106,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* impressão dos campos do arquivo de tamanho variavel */
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
-                  ImprimeArquivoDelim(arqDlm, numcampos, head, separador);
+                  ImprimeArquivoDelim(arqDlm, numcampos, head, separador);          //ALTERAR: LUCAS
                   fclose(arqDlm);
                   
                   system("pause");
@@ -114,12 +114,12 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
              case 4:
                   /* pesquisa um registro pela chave primária */
                   
-                  printf("\n%s: ", PEDIR_CHAVE_PRIMARIA);
+                  printf("\n%s: ", PEDIR_CHAVE_PRIMARIA);                           
                   scanf("%s", chavePrim);
                   
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     registro = PesquisaRegistro(nomeArqSaida, chavePrim, 
+                     registro = PesquisaRegistro(nomeArqSaida, chavePrim,          //ALTERADA LUIZ CLAUDIO                 
                                               separador, tamreg, numcampos);  
                      if(registro != NULL) {
 
@@ -139,7 +139,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Extração das chaves primárias */
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
-                  ExtraiChaves(arqDlm, &separador, head);
+                  ExtraiChaves(arqDlm, &separador, head);                          //ALTERADA LUIZ CLAUDIO
                   fclose(arqDlm);
                   printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
                   
@@ -158,7 +158,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   arqChaves = Fopen("chaves.ind", "r");
                   
-                  ImprimeChaves(arqChaves);
+                  ImprimeChaves(arqChaves);                                         //ALTERADA FELIPE
                   
                   fclose(arqChaves);
                   
@@ -168,7 +168,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Listar o arquivo com a extração das chaves classificadas
                      geradas na opção 6 */
                   
-                  arqChaves = Fopen("chavesClas.ind", "r");
+                  arqChaves = Fopen("chavesClas.ind", "r");                         
                   
                   ImprimeChaves(arqChaves);
                   
@@ -181,6 +181,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
                   ExtraiChaves(arqDlm, &separador, head);
+                  //FALTA CLASSIFICAR***********************************************LUIZ CLAUDIO
                   fclose(arqDlm);
                   printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
                   
@@ -192,9 +193,12 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   printf("\n%s: ", PEDIR_CHAVE_PRIMARIA);
                   scanf("%s", chavePrim);
                   
+                  arqChaves = Fopen("chavesClas.ind", "r");
+                  
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     registro = PesqIndexRegistro();  //CHAMADA PROVISORIA
+                     registro = PesqIndexRegistro(nomeArqSaida, chavePrim, 
+                                      arqChaves, separador, tamreg, numcampos);  
                      if(registro != NULL) {
 
                           printf("\n");
@@ -207,6 +211,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   else
                      printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
                          
+                  fclose(arqChaves);       
                   system("pause");
              break;
              case 11:
