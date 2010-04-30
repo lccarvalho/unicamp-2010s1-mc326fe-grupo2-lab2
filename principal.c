@@ -58,6 +58,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
      Record registro;
      int tamreg = TamMaxRegistro(head, numcampos);
      FILE *arqChaves;
+     int endFis;                                  //armazena endereço físico de um registro
      
      do {
          system("cls");
@@ -119,7 +120,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     registro = PesquisaRegistro(nomeArqSaida, chavePrim,          //ALTERADA LUIZ CLAUDIO                 
+                     registro = PesquisaRegistro(nomeArqSaida, chavePrim,          
                                               separador, tamreg, numcampos);  
                      if(registro != NULL) {
 
@@ -158,7 +159,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   arqChaves = Fopen("chaves.ind", "r");
                   
-                  ImprimeChaves(arqChaves);                                         //ALTERADA FELIPE
+                  ImprimeChaves(arqChaves);                                         //ALTERAR: FELIPE
                   
                   fclose(arqChaves);
                   
@@ -181,7 +182,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
                   ExtraiChaves(arqDlm, &separador, head);
-                  //FALTA CLASSIFICAR***********************************************LUIZ CLAUDIO
+                  ClassificaChavePrimaria();
                   fclose(arqDlm);
                   printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
                   
@@ -194,11 +195,12 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   scanf("%s", chavePrim);
                   
                   arqChaves = Fopen("chavesClas.ind", "r");
+                  arqDlm    = Fopen(nomeArqSaida, "r");
                   
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     registro = PesqIndexRegistro(nomeArqSaida, chavePrim, 
-                                      arqChaves, separador, tamreg, numcampos);  
+                     endFis =   IndexRegistro(arqChaves, chavePrim);
+                     registro = CarregaRegDelim(arqDlm, endFis);
                      if(registro != NULL) {
 
                           printf("\n");
@@ -219,14 +221,18 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   
                   printf("\n%s: ", PEDIR_REG_A_REMOVER);
                   scanf("%s", chavePrim);
+
+                  arqChaves = Fopen("chavesClas.ind", "r");
+                  arqDlm    = Fopen(nomeArqSaida, "r");
+
                   
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     registro = PesqIndexRegistro();  //CHAMADA PROVISORIA
+                     endFis =   IndexRegistro(arqChaves, chavePrim);
                      if(registro != NULL) {
 
                           printf("\n");
-                          RemoveRegistro();           //CHAMADA PROVISORIA
+                          RemoveRegistro(arqDlm, endFis);           //CHAMADA PROVISORIA
                           LiberaRegistro(registro, numcampos);
                      }
                      else
