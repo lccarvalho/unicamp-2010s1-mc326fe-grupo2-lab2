@@ -117,7 +117,8 @@ void ImprimeChaves(FILE *arq);
 
 
 /*******************************NOVAS FUNÇÕES DO LAB2C*************************/
-Record PesqIndexRegistro();
+Record PesqIndexRegistro(FILE* , chavePrim, 
+                                      arqChaves, separador, tamreg, numcampos);  );
 /* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
 
 void RemoveRegistro();
