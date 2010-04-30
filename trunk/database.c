@@ -424,6 +424,7 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n){
                     rec[0] = strtok(linha,&sep);
 
                     if (strcmp(rec[0],key) == 0) {     //achou a chave
+                                                       //se foi removido nunca vai achar
 
                        for(i=0;i<n-1;i++){
                              //se próximo campo é vazio             
@@ -478,7 +479,9 @@ void ExtraiChaves(FILE *arqDlm, char* sep, Header* head){
         fgets(linha, 400, arqDlm);
         if(!feof(arqDlm)) {
                           key = strtok(linha,sep);
-                          fprintf(ind, "%s %ld\n", key, endereco);
+                          //verifica se o registro não foi removido logicamente
+                          if(key[0] != '*')
+                                    fprintf(ind, "%s %ld\n", key, endereco);
         }
    }
    free(key); 
