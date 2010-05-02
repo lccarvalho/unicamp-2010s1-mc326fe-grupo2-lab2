@@ -343,56 +343,41 @@ void ImprimeArquivoFixo(FILE* arqFix, int numcampos, Header* head){
 void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
 /* Imprime os dados de um arquivo de campos de tamanho variavel */
 
-     int i, j;
-     char aux[300];
-     char g, f;
-     printf("\n");
-     
-     rewind(arqDel);
-     f=fgetc(arqDel);                  
-                
-     while(!feof(arqDel)) {
-                          
-                                       
+    Record reg;  
+    int i;
+    long pos, upos;
+    Boolean fim=false;
+    
+    fseek (arqDel, 0, SEEK_END);       //pega a ultima posicao do arquivo
+    upos = ftell(arqDel);  
+    
+    fseek (arqDel, 0, SEEK_SET);       //volta para o inicio do arquivo
+    
+    
+     while(fim==false) {               //faz o loop ate o fim do arquivo
 
-        /* imprime o nome do campo e seu respectivo valor */
-        for(i=0; i<numcampos-1; i++) {
-           
-           //primeiro caracter da palavra
-           if(i==0)
-              g=f;
-           else   
-              g=fgetc(arqDel);
-              
-           j=0;
-          
-           //forma a palavra
-           while (g!=c){
-                aux[j]=g;
-                j++; 
-                g=fgetc(arqDel);
-                 
-           } 
-           
-           aux[j]='\0';
-           
-           /* imprime o nome do campo e seu respectivo valor */      
-           fprintf(stdout, "%s: ", head[i].nome);
-           fprintf(stdout, "%s \n", aux);
-        }
-
-        g=fgetc(arqDel); /* Avanca o # */ 
-        g=fgetc(arqDel);
-        f=fgetc(arqDel); /* Verifica se o arquivo cheogou ao final */ 
+         pos = ftell(arqDel);          //pega a posicao atual
+         
+         if(pos<upos){                 //verifica se o arquivo chegou ao fim
+         
+            reg = CarregaRegDelim(arqDel, pos, numcampos, c);            //cria o registro atual
+         
+            if(reg!=NULL){                                               //verifica se o registyro atual foi excluido
 
 
-       
-        printf("\n");
-                    
-     }
-           
-                   
-     fseek(arqDel, 0, SEEK_SET);     /* Volta para o inicio do arquivo */ 
+              for(i=0;i<numcampos-1;i++){                                //escreve o resgitro caso nao esteja excluido
+                 fprintf(stdout, "%s: ", head[i].nome);
+                 fprintf(stdout, "%s \n", reg[i]);
+              }   
+
+              fprintf(stdout, "\n");                       
+           }
+                                                                 
+        } 
+        else                        // se chegou ao fim, finaliza o loop
+          fim=true;
+        
+     }           
       
 } /* ImprimeArquivoVariavel */
       
