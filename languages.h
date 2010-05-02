@@ -49,6 +49,7 @@ char * ARQ_CHAVES_CRIADO;
 char * ARQ_CHAVES_CLASSIFICADO;
 char * CHAVE_PRIM;
 char * ENDERECO;
+char * REG_REMOVIDO;
 
 /* erros nos registros */
 char * ERRO_RA;

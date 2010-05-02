@@ -487,7 +487,7 @@ void ExtraiChaves(FILE *arqDlm, char* sep, Header* head){
    free(key); 
    fclose(ind);
  
-}/* ExtraiChaves */
+} /* ExtraiChaves */
 
 
 void ClassificaChavePrimaria(){
@@ -499,19 +499,45 @@ void ClassificaChavePrimaria(){
 } /* ClassificaChavePrimaria */
 
 
-void ImprimeChaves(FILE *arq){
-/* Imprime as chaves primarias e o endereço */
+Boolean Removido(FILE *arq, int end) {
+/* Verifica se o registro de endereço 'end' tem a marca de remoção '*', retornando
+   'true' em caso afirmativo ou 'false' caso contrário. */
+        
+    char c;
+    
+    fseek(arq, end, SEEK_SET);
+    
+    c = fgetc(arq);
+    
+    if(c == '*')
+        return true;
+        
+    return false;
+    
+} /* Removido */
 
-   char *leArq[16];
+
+void ImprimeChaves(FILE *arq, FILE *arqDlm){
+/* Imprime as chaves primarias e o endereço.
+   Não imprime chaves de registros removidos (registros marcados com '*'). */
+
+   char chave[16], end[16];
+   
+   fscanf(arq, "%s", chave);
    
    while(!feof(arq)){ 
-      fscanf(arq, "%s", leArq);
-      if(feof(arq))
-         break;
-      printf("\n%s: %s\n", CHAVE_PRIM, leArq);
-      fscanf(arq, "%s", leArq);
-      printf("%s: %s\n", ENDERECO, leArq);
+      
+      fscanf(arq, "%s", end);
+      
+      if(!Removido(arqDlm, atoi(end))) {  /* verifica se não foi removido */
+      
+          printf("\n%s: %s\n", CHAVE_PRIM, chave);
+          printf("%s: %s\n", ENDERECO, end);
+      }
+      
+      fscanf(arq, "%s", chave);
    }
+   
    printf("\n");
    
 } /* ImprimeChaves */
@@ -544,29 +570,30 @@ int IndexRegistro(FILE *arqChaves, int chavePrim){
              fseek(arqChaves, tam*meio, SEEK_CUR);
              fscanf(arqChaves, "%d", &indice);
              
-             if(chavePrim == indice) {     //achou
+             if(chavePrim == indice) {     /* achou */
                  fscanf(arqChaves, "%d", &end);
                  return end;
              }
              
-             if (chavePrim < indice) {      //menor
+             if (chavePrim < indice) {      /* menor */
                  sup = meio-1;
                  fseek(arqChaves, 0, SEEK_SET);
              }
              
-             else {          //maior
+             else {          /* maior */
                  inf = meio+1;
                  fseek(arqChaves, 0, SEEK_SET);
              }
    }
    
-   return -1;   //não achou
+   return -1;   /* não achou */
    
 } /* PesqIndexRegistro */
 
 
 Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
-/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' */
+/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' ou retorna
+   NULL caso o registro tenha sido removido. */
       
     Record reg = Malloc(sizeof(char*)*n);
     char aux[300], *linha;
@@ -580,8 +607,13 @@ Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
     
     reg[0] = strtok(linha, &sep);
     
+    if(reg[0][0] == '*') {     /* registro removido */
+        LiberaRegistro(reg, n);
+        return NULL;
+    }
+    
     for(i=0;i<n-1;i++){
-    //se próximo campo é vazio             
+    /* se próximo campo é vazio */
         if(*(reg[i]+strlen(reg[i])+1)==sep){
             *(reg[i]+strlen(reg[i])+1) = '\0';
             i++;
@@ -595,9 +627,25 @@ Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
 } /* CarregaRegDelim */
 
 
-void RemoveRegistro(){
-/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
+void RemoveRegistro(FILE *arq, int end){
+/* Remove um registro d eendereço 'end' do arquivo 'arq' inserindo o caractere
+   '*' no primeiro digito do ra como marca de remoção. */
 
-}
+    char *chave;
+    
+    fseek(arq, end, SEEK_SET);
+    
+    chave = malloc(sizeof(char)*6);
+    fread(chave, sizeof(char), 6, arq);      /* le a chave do registro a ser removido */
+    
+    fseek(arq, end, SEEK_SET);
+    
+    chave[0] = '*';       /* insere a marca de remoção */
+    
+    fwrite(chave, sizeof(char), 6, arq);      /* reescreve a chave, agora com a marca de remoção */
+    
+    free(chave);
+    
+} /* RemoveRegistro */
 
 

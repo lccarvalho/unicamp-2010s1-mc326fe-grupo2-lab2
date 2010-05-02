@@ -18,12 +18,12 @@ Project 2
 File conversion success
 Invalid option
 Select an option
-Number of registers
+Number of records
 Number of bytes of original file
 Number of bytes of converted file
 Inform RA to search
 Inform RA of student to be removed
-Register not found
+Record not found
 Index file created
 Sorted index file created
 Invalid RA
@@ -33,6 +33,6 @@ Invalid sex
 Invalid course
 Primary key
 Address
-Invalid register(s)
+Invalid record(s)
 Obligatory data not inserted
-
+Record deleted
