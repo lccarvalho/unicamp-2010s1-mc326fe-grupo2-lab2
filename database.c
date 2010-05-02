@@ -417,7 +417,7 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n){
    FILE* f = Fopen(arq, "rt");
    char* linha = malloc(sizeof(char)*max);
    int i = 0;
-   Record rec = malloc(sizeof(char*)*n);
+   Record rec = Malloc(sizeof(char*)*n);
 
    while(!feof(f)) {
                     fgets(linha, max, f);
@@ -516,21 +516,82 @@ void ImprimeChaves(FILE *arq){
    
 } /* ImprimeChaves */
 
-/*******************************NOVAS FUNÇÕES DO LAB2C*************************/
-Record PesqIndexRegistro(){
-/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
 
-   Record rec;
-   return rec;
+/*******************************NOVAS FUNÇÕES DO LAB2C*************************/
+
+int IndexRegistro(FILE *arqChaves, int chavePrim){
+/* Procura 'chavePrim' no arquivo de indices 'arqChaves'.
+   Retorna o endereço do registro se encontrar ou -1 caso contrário. */
+
+   int tam, end, n = 0, inf, sup, meio, indice;
+   char aux[30];
+   
+   fgets(aux, 30, arqChaves);
+   tam = strlen(aux)+1;      /* Tamanho de uma linha */
+   
+   fseek(arqChaves, 0, SEEK_END);
+   n = ftell(arqChaves) / tam;      /* Numero de indices */
+   
+   rewind(arqChaves);
+   
+   inf = 0;
+   sup = n-1;
+   
+   /* pesquisa binária */
+   while(inf <= sup) {
+             
+             meio = (inf+sup)/2;
+             fseek(arqChaves, tam*meio, SEEK_CUR);
+             fscanf(arqChaves, "%d", &indice);
+             
+             if(chavePrim == indice) {     //achou
+                 fscanf(arqChaves, "%d", &end);
+                 return end;
+             }
+             
+             if (chavePrim < indice) {      //menor
+                 sup = meio-1;
+                 fseek(arqChaves, 0, SEEK_SET);
+             }
+             
+             else {          //maior
+                 inf = meio+1;
+                 fseek(arqChaves, 0, SEEK_SET);
+             }
+   }
+   
+   return -1;   //não achou
    
 } /* PesqIndexRegistro */
 
-Record CarregaRegDelim(FILE* arq, int end){
-/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
 
-   Record rec;
-   return rec;
-   
+Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
+/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' */
+      
+    Record reg = Malloc(sizeof(char*)*n);
+    char aux[300], *linha;
+    int i;
+    
+    fseek(arqDlm, endFis, SEEK_SET);
+    
+    fgets(aux, 300, arqDlm);
+    linha = Malloc(sizeof(char)*(strlen(aux)+1));
+    strcpy(linha, aux);
+    
+    reg[0] = strtok(linha, &sep);
+    
+    for(i=0;i<n-1;i++){
+    //se próximo campo é vazio             
+        if(*(reg[i]+strlen(reg[i])+1)==sep){
+            *(reg[i]+strlen(reg[i])+1) = '\0';
+            i++;
+            reg[i] = (reg[i-1]+strlen(reg[i-1])+1);
+        }
+        reg[i+1] = strtok (reg[i]+strlen(reg[i])+1, &sep);
+    }
+    
+    return reg;
+      
 } /* CarregaRegDelim */
 
 
@@ -539,9 +600,4 @@ void RemoveRegistro(){
 
 }
 
-int  IndexRegistro(FILE* arq, char* chave){
-/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/     
-     int i = 0;
-     return i;
-     
-}
+

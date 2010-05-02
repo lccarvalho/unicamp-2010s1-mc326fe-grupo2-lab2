@@ -117,14 +117,14 @@ void ImprimeChaves(FILE *arq);
 
 
 /*******************************NOVAS FUNÇÕES DO LAB2C*************************/
-Record PesqIndexRegistro();
-/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
+int IndexRegistro(FILE *arqChaves, int chavePrim);
+/* Procura 'chavePrim' no arquivo de indices 'arqChaves'.
+   Retorna o endereço do registro se encontrar ou -1 caso contrário. */
+
+Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep);
+/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' */
 
 void RemoveRegistro();
 /* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
 
-Record CarregaRegDelim(FILE* arq, int end);
-/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
 
-int  IndexRegistro(FILE* arq, char* chave);
-/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/

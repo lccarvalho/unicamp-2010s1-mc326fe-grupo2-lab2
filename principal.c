@@ -35,12 +35,13 @@ void Erro(char * msgErro) {
 int LeOpcao(){
 /* Le a opcao digitada e a retorna como um 'int' */
 
-    char opcao[5];
+    char opcao[16];
     printf("\n%s: ", PEDE_OPCAO);
     scanf("%s", opcao);
     
     while(!VerificaDigitos(opcao)) {
-       printf("%s", OPCAO_INV); 
+       printf("\n%s\n", OPCAO_INV); 
+       printf("\n%s: ", PEDE_OPCAO);
        scanf("%s", opcao);
     }
     
@@ -77,10 +78,9 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
          printf("%s\n", OPCAO_12);
          
          
-         
          opcao = LeOpcao();
          while(opcao <= 0 || opcao > 12){   /* Verifica se é uma opção válida */
-             printf("%s", OPCAO_INV);
+             printf("\n%s\n", OPCAO_INV);
              opcao = LeOpcao();
          }
          
@@ -195,17 +195,19 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   scanf("%s", chavePrim);
                   
                   arqChaves = Fopen("chavesClas.ind", "r");
-                  arqDlm    = Fopen(nomeArqSaida, "r");
                   
                   if(VerificaStringNumericaNaoNula(chavePrim, 6)){                                  
                   
-                     endFis =   IndexRegistro(arqChaves, chavePrim);
-                     registro = CarregaRegDelim(arqDlm, endFis);
-                     if(registro != NULL) {
-
+                     endFis = IndexRegistro(arqChaves, atoi(chavePrim));
+                     
+                     if(endFis != -1) {
+                          
+                          arqDlm = Fopen(nomeArqSaida, "r");
+                          registro = CarregaRegDelim(arqDlm, endFis, numcampos, separador);
                           printf("\n");
                           ImprimeRegistro(registro, head, numcampos);
                           LiberaRegistro(registro, numcampos);
+                          fclose(arqDlm);  
                      }
                      else
                           printf("\n%s\n\n", REGISTRO_INEXISTENTE);
@@ -213,13 +215,13 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   else
                      printf("\n%s\n\n", ERRO_RA);   /* RA Invalido */
                          
-                  fclose(arqChaves);       
+                  fclose(arqChaves);     
                   system("pause");
              break;
              case 11:
                   /* Remocao de um registro */
                   
-                  printf("\n%s: ", PEDIR_REG_A_REMOVER);
+                  /*printf("\n%s: ", PEDIR_REG_A_REMOVER);
                   scanf("%s", chavePrim);
 
                   arqChaves = Fopen("chavesClas.ind", "r");
