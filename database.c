@@ -481,7 +481,7 @@ void ExtraiChaves(FILE *arqDlm, char* sep, Header* head){
                           key = strtok(linha,sep);
                           //verifica se o registro não foi removido logicamente
                           if(key[0] != '*')
-                                    fprintf(ind, "%s %ld\n", key, endereco);
+                                    fprintf(ind, "%s %10ld\n", key, endereco);
         }
    }
    free(key); 
@@ -525,8 +525,23 @@ Record PesqIndexRegistro(){
    
 } /* PesqIndexRegistro */
 
+Record CarregaRegDelim(FILE* arq, int end){
+/* ESCREVER O QUE FAZ E INCLUIR OS PARÂMETROS */
+
+   Record rec;
+   return rec;
+   
+} /* CarregaRegDelim */
+
 
 void RemoveRegistro(){
 /* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
 
+}
+
+int  IndexRegistro(FILE* arq, char* chave){
+/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/     
+     int i = 0;
+     return i;
+     
 }

@@ -122,3 +122,9 @@ Record PesqIndexRegistro();
 
 void RemoveRegistro();
 /* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
+
+Record CarregaRegDelim(FILE* arq, int end);
+/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
+
+int  IndexRegistro(FILE* arq, char* chave);
+/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
