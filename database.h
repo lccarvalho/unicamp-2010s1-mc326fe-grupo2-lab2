@@ -104,7 +104,7 @@ Record PesquisaRegistro(char* arq, char* key, char sep, int max, int n);
 void ImprimeRegistro(Record registro, Header* head, int numcampos);
 /* Imprime todos os campos de um registro */
 
-void ExtraiChaves(FILE *arqDlm, char* sep, Header* head);
+void ExtraiChaves(FILE *arqDlm, int numcampos, Header* head);
 /* Cria um arquivo 'chaves.ind' com as chaves primárias do arquivo de dados arqDlm,
    junto com os respectivos endereços dos registros no arquivo */
    
