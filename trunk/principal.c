@@ -140,7 +140,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Extração das chaves primárias */
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
-                  ExtraiChaves(arqDlm, numcampos, head);
+                  ExtraiChaves(arqDlm, &separador, head);
                   fclose(arqDlm);
                   printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
                   
@@ -185,7 +185,7 @@ void Menu(Header* head, FILE* arqFix, FILE* arqDlm, char* nomeArqSaida, char sep
                   /* Criação do arquivo de índices */
                   
                   arqDlm = Fopen(nomeArqSaida, "r");
-                  ExtraiChaves(arqDlm, numcampos, head);
+                  ExtraiChaves(arqDlm, &separador, head);
                   ClassificaChavePrimaria();
                   fclose(arqDlm);
                   printf("\n%s\n\n", ARQ_CHAVES_CRIADO);
