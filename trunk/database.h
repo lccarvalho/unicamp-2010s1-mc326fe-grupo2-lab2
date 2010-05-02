@@ -112,8 +112,9 @@ void ClassificaChavePrimaria();
 /* Cria um arquivo 'chavesClas.ind' a partir do arquivo 'chaves.ind' já criado,
    classificando-o */
 
-void ImprimeChaves(FILE *arq);
-/* Imprime as chaves primarias e o endereço */
+void ImprimeChaves(FILE *arq, FILE *arqDlm);
+/* Imprime as chaves primarias e o endereço.
+   Não imprime chaves de registros removidos (registros marcados com '*'). */
 
 
 /*******************************NOVAS FUNÇÕES DO LAB2C*************************/
@@ -122,9 +123,11 @@ int IndexRegistro(FILE *arqChaves, int chavePrim);
    Retorna o endereço do registro se encontrar ou -1 caso contrário. */
 
 Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep);
-/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' */
+/* Retorna um registro de endereço 'endFis' do arquivo 'arqDlm' ou retorna
+   NULL caso o registro tenha sido removido. */
 
-void RemoveRegistro();
-/* ESCREVER O QUE FAZ E INCLUIR PARÂMETROS E TIPO DA FUNÇÃO*/
+void RemoveRegistro(FILE *arq, int end);
+/* Remove um registro d eendereço 'end' do arquivo 'arq' inserindo o caractere
+   '*' no primeiro digito do ra como marca de remoção. */
 
 

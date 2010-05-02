@@ -74,6 +74,7 @@ void Linguagem(char *lingua){
    LeMensagem(lang, &ENDERECO);
    LeMensagem(lang, &NUM_REG_INV);
    LeMensagem(lang, &ERRO_DADOS_OBRIG);
+   LeMensagem(lang, &REG_REMOVIDO);
 
    fclose(lang);
      
@@ -116,7 +117,7 @@ void LiberaMensagens(){
    free(&ENDERECO);
    free(&NUM_REG_INV);
    free(&ERRO_DADOS_OBRIG);
-   
+   free(&REG_REMOVIDO);
    
 } /* LiberaMensagens */
 
