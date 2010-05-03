@@ -371,10 +371,11 @@ void ImprimeArquivoDelim(FILE* arqDel, int numcampos, Header* head, char c){
               }   
 
               fprintf(stdout, "\n");                       
-           }
-           
-           LiberaRegistro(reg,numcampos);
-                                                                 
+
+              LiberaRegistro(reg,numcampos);                             //liberar
+
+           }     
+                                                                
         } 
         else                        // se chegou ao fim, finaliza o loop
           fim=true;
