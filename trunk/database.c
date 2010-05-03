@@ -596,7 +596,8 @@ Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
     reg[0] = strtok(linha, &sep);
     
     if(reg[0][0] == '*') {     /* registro removido */
-        LiberaRegistro(reg, n);
+        free(linha);
+        free(reg);
         return NULL;
     }
     
@@ -616,7 +617,7 @@ Record CarregaRegDelim(FILE *arqDlm, int endFis, int n, char sep){
 
 
 void RemoveRegistro(FILE *arq, int end){
-/* Remove um registro d eendereço 'end' do arquivo 'arq' inserindo o caractere
+/* Remove um registro de endereço 'end' do arquivo 'arq' inserindo o caractere
    '*' no primeiro digito do ra como marca de remoção. */
 
     char *chave;
